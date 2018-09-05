@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:elevation="10dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".app.MainActivity">
+
+        <TextView
+            android:id="@+id/tvCloneLoss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/clone_loss"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.082" />
+
+        <EditText
+            android:id="@+id/etCloneLoss"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:hint="0"
+            android:inputType="number"
+            android:text="2"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCloneLoss"
+            app:layout_constraintStart_toEndOf="@+id/tvCloneLoss"
+            app:layout_constraintTop_toTopOf="@+id/tvCloneLoss"
+            app:layout_constraintVertical_bias="0.685" />
+
+        <TextView
+            android:id="@+id/tvCloneLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/clone_level"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCloneLoss"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.559"
+            app:layout_constraintStart_toEndOf="@+id/tvCloneLoss"
+            app:layout_constraintTop_toTopOf="@+id/tvCloneLoss"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <EditText
+            android:id="@+id/etCloneLevel"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:hint="0"
+            android:inputType="number"
+            android:maxLength="1"
+            android:text="2"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCloneLevel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.312"
+            app:layout_constraintStart_toEndOf="@+id/tvCloneLevel"
+            app:layout_constraintTop_toTopOf="@+id/tvCloneLevel"
+            app:layout_constraintVertical_bias="0.685" />
+
+        <TextView
+            android:id="@+id/tvPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/percent"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCloneLoss"
+            app:layout_constraintStart_toEndOf="@+id/etCloneLoss"
+            app:layout_constraintTop_toTopOf="@+id/tvCloneLoss" />
+
+        <TextView
+            android:id="@+id/tvCloneDamageAddition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="@string/clone_damage_addition"
+            app:layout_constraintStart_toStartOf="@+id/tvCloneLoss"
+            app:layout_constraintTop_toBottomOf="@+id/tvCloneLoss" />
+
+        <EditText
+            android:id="@+id/etCloneDamageAdditon"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:hint="0"
+            android:inputType="number"
+            android:text="31000"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCloneDamageAddition"
+            app:layout_constraintStart_toEndOf="@+id/tvCloneDamageAddition"
+            app:layout_constraintTop_toTopOf="@+id/tvCloneDamageAddition" />
+
+        <TextView
+            android:id="@+id/tvCloneDamageReduction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/clone_damage_reduction"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCloneDamageAddition"
+            app:layout_constraintEnd_toStartOf="@+id/etCloneDamageReduction"
+            app:layout_constraintStart_toEndOf="@+id/etCloneDamageAdditon"
+            app:layout_constraintTop_toTopOf="@+id/tvCloneDamageAddition"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <EditText
+            android:id="@+id/etCloneDamageReduction"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center"
+            android:hint="0"
+            android:inputType="number"
+            android:text="40000"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCloneDamageReduction"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvCloneDamageReduction" />
+
+        <TextView
+            android:id="@+id/tvCloneCrit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="@string/clone_damage_crit"
+            app:layout_constraintStart_toStartOf="@+id/tvCloneDamageAddition"
+            app:layout_constraintTop_toBottomOf="@+id/tvCloneDamageAddition" />
+
+        <EditText
+            android:id="@+id/etCloneCrit"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="0"
+            android:inputType="number"
+            android:text="3600"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCloneCrit"
+            app:layout_constraintStart_toStartOf="@+id/etCloneDamageAdditon"
+            app:layout_constraintTop_toTopOf="@+id/tvCloneCrit" />
+
+        <TextView
+            android:id="@+id/tvCloneRefelcetion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/clone_damage_reflection"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCloneCrit"
+            app:layout_constraintEnd_toEndOf="@+id/tvCloneDamageReduction"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tvCloneDamageReduction"
+            app:layout_constraintTop_toTopOf="@+id/tvCloneCrit"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/etCloneRefelection"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center"
+            android:hint="0"
+            android:inputType="number"
+            android:text="35000"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCloneRefelcetion"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/etCloneDamageReduction"
+            app:layout_constraintTop_toTopOf="@+id/tvCloneRefelcetion" />
+
+        <TextView
+            android:id="@+id/tvAngel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="@string/clone_angel"
+
+            app:layout_constraintStart_toStartOf="@+id/tvCloneCrit"
+            app:layout_constraintTop_toBottomOf="@+id/tvCloneCrit" />
+
+        <Spinner
+            android:id="@+id/spinnerAngel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="52dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="52dp"
+            android:entries="@array/clone"
+            app:layout_constraintBottom_toBottomOf="@+id/tvAngel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvAngel"
+            app:layout_constraintTop_toTopOf="@+id/tvAngel" />
+
+        <TextView
+            android:id="@+id/tvInsectQueen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/clone_insect_queen"
+            app:layout_constraintStart_toStartOf="@+id/tvAngel"
+            app:layout_constraintTop_toBottomOf="@+id/tvAngel" />
+
+        <Spinner
+            android:id="@+id/spinnerInsectQuene"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/clone"
+            app:layout_constraintBottom_toBottomOf="@+id/tvInsectQueen"
+            app:layout_constraintStart_toStartOf="@+id/spinnerAngel"
+            app:layout_constraintTop_toTopOf="@+id/tvInsectQueen" />
+
+        <TextView
+            android:id="@+id/tvNano"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/clone_nano"
+            app:layout_constraintStart_toStartOf="@+id/tvInsectQueen"
+            app:layout_constraintTop_toBottomOf="@+id/tvInsectQueen" />
+
+        <Spinner
+            android:id="@+id/spinnerNano"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/clone"
+            app:layout_constraintBottom_toBottomOf="@+id/tvNano"
+            app:layout_constraintStart_toStartOf="@+id/spinnerInsectQuene"
+            app:layout_constraintTop_toTopOf="@+id/tvNano" />
+
+        <TextView
+            android:id="@+id/tvMutant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/mutant"
+            app:layout_constraintStart_toStartOf="@+id/tvNano"
+            app:layout_constraintTop_toBottomOf="@+id/tvNano" />
+
+        <Spinner
+            android:id="@+id/spinnerMutant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/clone"
+            app:layout_constraintBottom_toBottomOf="@+id/tvMutant"
+            app:layout_constraintStart_toStartOf="@+id/spinnerNano"
+            app:layout_constraintTop_toTopOf="@+id/tvMutant" />
+
+        <TextView
+            android:id="@+id/tvDragon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/dragon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvMutant"
+            app:layout_constraintTop_toBottomOf="@+id/tvMutant" />
+
+        <Spinner
+            android:id="@+id/spinnerDragon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/clone"
+            app:layout_constraintBottom_toBottomOf="@+id/tvDragon"
+            app:layout_constraintStart_toStartOf="@+id/spinnerMutant"
+            app:layout_constraintTop_toTopOf="@+id/tvDragon" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

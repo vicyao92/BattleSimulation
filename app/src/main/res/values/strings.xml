@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">BattleSimulation</string>
+    <string name="percent">%</string>
+    <string name="power">战力</string>
+    <string name="faction">阵营</string>
+    <string name="fire">火力</string>
+    <string name="defence">护甲</string>
+    <string name="speed">机动</string>
+    <string name="luck">幸运</string>
+    <string name="satellite">卫星增减伤害</string>
+    <string name="clone_loss">克隆体战损降低</string>
+    <string name="clone_damage_addition">克隆体增伤</string>
+    <string name="clone_damage_reduction">克隆体减伤</string>
+    <string name="clone_damage_crit">克隆体暴击</string>
+    <string name="clone_damage_reflection">克隆体反伤</string>
+    <string name="clone_level">克隆体等级</string>
+    <string name="clone_angel">天使追击</string>
+    <string name="clone_insect_queen">虫后毒伤</string>
+    <string name="clone_nano">纳米尖兵膜</string>
+    <string name="mutant">变种人燃烧</string>
+    <string name="dragon">虚空龙残废</string>
+    <string name="target">攻打目标</string>
+    <string name="optimal_solution">求最优解</string>
+    <string name="simulation">战斗模拟</string>
+    <string name="clone_num">克隆体数量</string>
+    <string name="clone_super">超级</string>
+    <string name="clone_medium">中级</string>
+    <string name="clone_low">初级</string>
+    <string-array name="faction">
+        <item>奥鲁维之刃</item>
+        <item>卡纳斯的启示</item>
+        <item>游荡者之歌</item>
+        <item>深渊的咆哮</item>
+    </string-array>
+    <string-array name="clone">
+        <item>无</item>
+        <item>未强化</item>
+        <item>已强化</item>
+    </string-array>
+    <string-array name="target">
+        <item>M02元星掠夺第4波</item>
+        <item>M02元星掠夺第5波</item>
+        <item>M02元星曼徳斯</item>
+        <item>M02浮丘</item>
+        <item>M02投影5级</item>
+        <item>M02海尼拉星炽天使</item>
+        <item>M02徇星金蝰蛇</item>
+        <item>M02元星霍德尔</item>
+        <item>M01神龙</item>
+    </string-array>
+</resources>
