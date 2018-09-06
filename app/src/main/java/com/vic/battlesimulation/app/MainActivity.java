@@ -490,12 +490,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         theClass.etCloneRefelection.setText(String.valueOf(cursor.getLong(cursor.getColumnIndex("clonefan"))));
                         theClass.spinnerAngel.setSelection(cursor.getInt(cursor.getColumnIndex("angel")),true);
                         theClass.spinnerInsectQuene.setSelection(cursor.getInt(cursor.getColumnIndex("insect")),true);
-                        Log.d("ygp",cursor.getInt(cursor.getColumnIndex("insect"))+"");
                         theClass.spinnerNano.setSelection(cursor.getInt(cursor.getColumnIndex("nano")),true);
-                        Log.d("ygp",cursor.getInt(cursor.getColumnIndex("nano"))+"");
                         theClass.spinnerMutant.setSelection(cursor.getInt(cursor.getColumnIndex("mutant")),true);
                         theClass.spinnerDragon.setSelection(cursor.getInt(cursor.getColumnIndex("dragon")),true);
-
                     }
                     cursor.close();
                     database.close();
