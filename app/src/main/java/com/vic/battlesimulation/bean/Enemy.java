@@ -10,8 +10,19 @@ public class Enemy implements Parcelable{
         this.enemyAttribute = enemyAttribute;
     }
 
+
     protected Enemy(Parcel in) {
         enemyAttribute = in.readParcelable(BasicAttribute.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(enemyAttribute, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Enemy> CREATOR = new Creator<Enemy>() {
@@ -32,15 +43,5 @@ public class Enemy implements Parcelable{
 
     public void setEnemyAttribute(BasicAttribute enemyAttribute) {
         this.enemyAttribute = enemyAttribute;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeParcelable(enemyAttribute, i);
     }
 }

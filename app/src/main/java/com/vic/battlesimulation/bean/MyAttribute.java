@@ -23,7 +23,7 @@ public class MyAttribute implements Parcelable{
     private int cloneDragon;
     private int superCloneNum;
     private int mediumCloneNum;
-    private int CloneNum;
+    private int lowCloneNum;
 
     public MyAttribute(BasicAttribute myAttribute) {
         this.myAttribute = myAttribute;
@@ -47,6 +47,38 @@ public class MyAttribute implements Parcelable{
         cloneNano = in.readInt();
         cloneMutant = in.readInt();
         cloneDragon = in.readInt();
+        superCloneNum = in.readInt();
+        mediumCloneNum = in.readInt();
+        lowCloneNum = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(myAttribute, flags);
+        dest.writeLong(mbZeng);
+        dest.writeLong(mbJian);
+        dest.writeLong(mbFan);
+        dest.writeLong(mbBao);
+        dest.writeLong(satellite);
+        dest.writeInt(cloneLoss);
+        dest.writeInt(cloneLevel);
+        dest.writeLong(cloneAdditionDamage);
+        dest.writeLong(cloneReductionDamage);
+        dest.writeLong(cloneCricDamage);
+        dest.writeLong(cloneReflectionDamage);
+        dest.writeInt(cloneAngel);
+        dest.writeInt(cloneInsect);
+        dest.writeInt(cloneNano);
+        dest.writeInt(cloneMutant);
+        dest.writeInt(cloneDragon);
+        dest.writeInt(superCloneNum);
+        dest.writeInt(mediumCloneNum);
+        dest.writeInt(lowCloneNum);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<MyAttribute> CREATOR = new Creator<MyAttribute>() {
@@ -60,14 +92,6 @@ public class MyAttribute implements Parcelable{
             return new MyAttribute[size];
         }
     };
-
-    public BasicAttribute getMyAttribute() {
-        return myAttribute;
-    }
-
-    public void setMyAttribute(BasicAttribute myAttribute) {
-        this.myAttribute = myAttribute;
-    }
 
     public long getMbZeng() {
         return mbZeng;
@@ -197,30 +221,35 @@ public class MyAttribute implements Parcelable{
         this.cloneDragon = cloneDragon;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public int getSuperCloneNum() {
+        return superCloneNum;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
+    public void setSuperCloneNum(int superCloneNum) {
+        this.superCloneNum = superCloneNum;
+    }
 
-        parcel.writeParcelable(myAttribute, i);
-        parcel.writeLong(mbZeng);
-        parcel.writeLong(mbJian);
-        parcel.writeLong(mbFan);
-        parcel.writeLong(mbBao);
-        parcel.writeLong(satellite);
-        parcel.writeInt(cloneLoss);
-        parcel.writeInt(cloneLevel);
-        parcel.writeLong(cloneAdditionDamage);
-        parcel.writeLong(cloneReductionDamage);
-        parcel.writeLong(cloneCricDamage);
-        parcel.writeLong(cloneReflectionDamage);
-        parcel.writeInt(cloneAngel);
-        parcel.writeInt(cloneInsect);
-        parcel.writeInt(cloneNano);
-        parcel.writeInt(cloneMutant);
-        parcel.writeInt(cloneDragon);
+    public int getMediumCloneNum() {
+        return mediumCloneNum;
+    }
+
+    public void setMediumCloneNum(int mediumCloneNum) {
+        this.mediumCloneNum = mediumCloneNum;
+    }
+
+    public int getLowCloneNum() {
+        return lowCloneNum;
+    }
+
+    public void setLowCloneNum(int lowCloneNum) {
+        this.lowCloneNum = lowCloneNum;
+    }
+
+    public BasicAttribute getMyAttribute() {
+        return myAttribute;
+    }
+
+    public void setMyAttribute(BasicAttribute myAttribute) {
+        this.myAttribute = myAttribute;
     }
 }

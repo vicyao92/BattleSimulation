@@ -211,9 +211,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         database.close();
 
         initialEnemyAttribute(target, power, fire, defence, speed, luck);
-
+/*        Bundle bundle = new Bundle();
+        bundle.putParcelable("EnemyAttr",enemy);
+        bundle.putParcelable("test", myAttribute);
+        intent.putExtra("bundle",bundle);*/
         intent.putExtra("MyAttribute", myAttribute);
-        intent.putExtra("Enemy", enemy);
+        intent.putExtra("EnemyAttr",enemy);
         startActivity(intent);
     }
 
@@ -233,6 +236,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         myAttribute.setCloneReductionDamage(Long.valueOf(etCloneDamageReduction.getText().toString()));
         myAttribute.setCloneCricDamage(Long.valueOf(etCloneCrit.getText().toString()));
         myAttribute.setCloneReflectionDamage(Long.valueOf(etCloneRefelection.getText().toString()));
+        myAttribute.setLowCloneNum(Integer.valueOf(etLowClone.getText().toString()));
+        myAttribute.setMediumCloneNum(Integer.valueOf(etMediumClone.getText().toString()));
+        myAttribute.setSuperCloneNum(Integer.valueOf(etSuperClone.getText().toString()));
         initialMibao(name);
     }
 

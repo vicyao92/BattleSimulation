@@ -2,8 +2,9 @@
 package com.vic.battlesimulation.adapter;
 
 import android.content.Context;
-import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -11,11 +12,19 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.XAxis.XAxisPosition;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.ChartData;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.vic.battlesimulation.R;
+import com.vic.battlesimulation.app.MyApplication;
 
-public class LineChartItem extends ChartItem {
+public class LineChartItem extends ChartItem implements OnChartGestureListener, OnChartValueSelectedListener{
 
+    MyMarkerView mv = new MyMarkerView(MyApplication.getContext(), R.layout.custom_marker_view);
+    ViewHolder holder = null;
     public LineChartItem(ChartData<?> cd, Context c) {
         super(cd);
     }
@@ -27,8 +36,6 @@ public class LineChartItem extends ChartItem {
 
     @Override
     public View getView(int position, View convertView, Context c) {
-
-        ViewHolder holder = null;
 
         if (convertView == null) {
 
@@ -69,11 +76,73 @@ public class LineChartItem extends ChartItem {
         // do not forget to refresh the chart
         // holder.chart.invalidate();
         holder.chart.animateX(1000);
+        //hightlight
+        //holder.chart.setHighlightPerTapEnabled(true);
+        holder.chart.setOnChartValueSelectedListener(this);
+        holder.chart.setTouchEnabled(true);
+        holder.chart.setMarkerView(mv);
 
         return convertView;
+    }
+
+    @Override
+    public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+        Log.i("Gesture", "START, x: " + me.getX() + ", y: " + me.getY());
+    }
+
+    @Override
+    public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+        Log.i("Gesture", "END, lastGesture: " + lastPerformedGesture);
+
+        // un-highlight values after the gesture is finished and no single-tap
+        if(lastPerformedGesture != ChartTouchListener.ChartGesture.SINGLE_TAP) {
+            holder.chart.highlightValues(null);
+        }
+    }
+
+    @Override
+    public void onChartLongPressed(MotionEvent me) {
+
+    }
+
+    @Override
+    public void onChartDoubleTapped(MotionEvent me) {
+
+    }
+
+    @Override
+    public void onChartSingleTapped(MotionEvent me) {
+
+    }
+
+    @Override
+    public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+
+    }
+
+    @Override
+    public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+
+    }
+
+    @Override
+    public void onChartTranslate(MotionEvent me, float dX, float dY) {
+
+    }
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        Log.i("Entry selected", e.getX()+"  "+e.getY());
+        holder.chart.highlightValue(h);
+    }
+
+    @Override
+    public void onNothingSelected() {
+
     }
 
     private static class ViewHolder {
         LineChart chart;
     }
+
 }

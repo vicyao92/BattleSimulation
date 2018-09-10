@@ -39,24 +39,25 @@ public class BasicAttribute implements Parcelable{
         bjCoefficient = in.readDouble();
         currentPower = in.readLong();
     }
+
     @Override
-    public int describeContents() {
-        return 0;
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeLong(power);
+        dest.writeInt(fire);
+        dest.writeInt(defense);
+        dest.writeInt(speed);
+        dest.writeInt(luck);
+        dest.writeLong(basicDamage);
+        dest.writeLong(damage);
+        dest.writeDouble(pjCoefficient);
+        dest.writeDouble(bjCoefficient);
+        dest.writeLong(currentPower);
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(name);
-        parcel.writeLong(power);
-        parcel.writeInt(fire);
-        parcel.writeInt(defense);
-        parcel.writeInt(speed);
-        parcel.writeInt(luck);
-        parcel.writeLong(basicDamage);
-        parcel.writeLong(damage);
-        parcel.writeDouble(pjCoefficient);
-        parcel.writeDouble(bjCoefficient);
-        parcel.writeLong(currentPower);
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<BasicAttribute> CREATOR = new Creator<BasicAttribute>() {

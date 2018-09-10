@@ -20,12 +20,12 @@ public class BarChartItem extends ChartItem {
     public BarChartItem(ChartData<?> cd, Context c) {
         super(cd);
 
-        //mTf = Typeface.createFromAsset(c.getAssets(), "OpenSans-Regular.ttf");
+        // mTf = Typeface.createFromAsset(c.getAssets(), "OpenSans-Regular.ttf");
     }
 
     @Override
     public int getItemType() {
-        return TYPE_BARCHART;
+        return 3;
     }
 
     @Override

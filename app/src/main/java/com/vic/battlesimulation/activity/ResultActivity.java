@@ -8,11 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ListView;
-
-import com.github.mikephil.charting.charts.Chart;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -22,7 +17,9 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.vic.battlesimulation.R;
 import com.vic.battlesimulation.adapter.BarChartItem;
@@ -70,9 +67,13 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
         ButterKnife.bind(this);
         Intent intent;
+        Bundle bundle;
         intent = getIntent();
+/*        bundle = intent.getBundleExtra("bundle");
+        myAttribute =  bundle.getParcelable("MyAttribute");
+        enemy = bundle.getParcelable("test");*/
         myAttribute = intent.getParcelableExtra("MyAttribute");
-        enemy = intent.getParcelableExtra("Enemy");
+        enemy = intent.getParcelableExtra("EnemyAttr");
         mySpeed = myAttribute.getMyAttribute().getSpeed();
         enemySpeed = enemy.getEnemyAttribute().getSpeed();
         myCurrentPower = myAttribute.getMyAttribute().getCurrentPower();
@@ -90,38 +91,44 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void initialChart() {
-/*        List<Entry> entries = new ArrayList<Entry>();
-        for (int i = 0;i < myCurrentPowerPerTurn.size();i++){
-            entries.add(new Entry(i,(float)myCurrentPowerPerTurn.get(i)/(float) myAttribute.getMyAttribute().getPower()*100));
-        }*/
         ListView lv = findViewById(R.id.listView1);
 
         ArrayList<ChartItem> list = new ArrayList<ChartItem>();
 
-        // 30 items
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 1; i++) {
             list.add(new LineChartItem(generateDataLine(), getApplicationContext()));
-            list.add(new BarChartItem(generateDataBar(), getApplicationContext()));
             list.add(new PieChartItem(generateDataPie(), getApplicationContext()));
-        }
+    }
 
         ChartDataAdapter cda = new ChartDataAdapter(getApplicationContext(), list);
         lv.setAdapter(cda);
     }
 
+    /**
+     * @return
+     * 生成克隆体战损饼图
+     */
     private PieData generateDataPie() {
-
+        double lowNum,mediumNum,superNum;
+        int loss = myAttribute.getCloneLoss();
+        double powerLossRate = (1-(double)myCurrentPowerPerTurn.get(myCurrentPowerPerTurn.size()-1)/(double)myCurrentPowerPerTurn.get(0));
+        double lossRate = 0.5/(1+((double)loss/100))*(powerLossRate);
+        lowNum =Math.ceil((double)myAttribute.getLowCloneNum() * lossRate);
+        mediumNum = Math.ceil(myAttribute.getMediumCloneNum() * lossRate);
+        superNum =Math.ceil(myAttribute.getSuperCloneNum() * lossRate);
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
 
-        for (int i = 0; i < 4; i++) {
-            entries.add(new PieEntry((float) ((Math.random() * 70) + 30), "Quarter " + (i+1)));
-        }
-
+        entries.add(new PieEntry((float) (lowNum), "低级克隆体"));
+        entries.add(new PieEntry((float) ((mediumNum)), "高级克隆体"));
+        entries.add(new PieEntry((float) (superNum), "超级克隆体"));
         PieDataSet d = new PieDataSet(entries, "");
 
         // space between slices
         d.setSliceSpace(2f);
-        d.setColors(ColorTemplate.VORDIPLOM_COLORS);
+        final int[] PIE_COLORS = {
+                Color.rgb(100,149,237), Color.rgb(	128,128,128),
+                Color.rgb(255, 208, 140)};
+        d.setColors(PIE_COLORS);
 
         PieData cd = new PieData(d);
         return cd;
@@ -130,12 +137,9 @@ public class ResultActivity extends AppCompatActivity {
     private LineData generateDataLine() {
 
         ArrayList<Entry> e1 = new ArrayList<Entry>();
-/*        int temp;
-        temp = myCurrentPowerPerTurn.size()>enemyCurrentPowerPerTurn.size()?myCurrentPowerPerTurn.size():
-                enemyCurrentPowerPerTurn.size();*/
         for (int i = 0; i < myCurrentPowerPerTurn.size(); i++) {
-            e1.add(new Entry(i,(float)myCurrentPowerPerTurn.get(i)/(float) myAttribute.getMyAttribute().getPower()*100));
-            //e1.add(new Entry(i, (int) (Math.random() * 65) + 40));
+            e1.add(new Entry(i,(float)myCurrentPowerPerTurn.get(i)/(float) myAttribute.getMyAttribute().getPower()*100,
+                    myCurrentPowerPerTurn.get(i)));
         }
 
         LineDataSet d1 = new LineDataSet(e1, "回合结束我方剩余战力");
@@ -143,21 +147,24 @@ public class ResultActivity extends AppCompatActivity {
         d1.setCircleRadius(6f);
         d1.setHighLightColor(Color.rgb(244, 117, 117));
         d1.setDrawValues(false);
+        d1.setHighlightEnabled(true);
+        d1.setColor(Color.BLUE);
 
         ArrayList<Entry> e2 = new ArrayList<Entry>();
 
         for (int i = 0; i < enemyCurrentPowerPerTurn.size(); i++) {
-            //e2.add(new Entry(i, e1.get(i).getY() - 30));
-            e2.add(new Entry(i,(float)enemyCurrentPowerPerTurn.get(i)/(float) enemy.getEnemyAttribute().getPower()*100));
+            e2.add(new Entry(i,(float)enemyCurrentPowerPerTurn.get(i)/(float)enemy.getEnemyAttribute().getPower()*100,enemyCurrentPowerPerTurn.get(i)));
         }
-
         LineDataSet d2 = new LineDataSet(e2, "回合结束敌方剩余战力");
-        d2.setLineWidth(4f);
-        d2.setCircleRadius(6f);
-        d2.setHighLightColor(Color.rgb(244, 117, 117));
-        d2.setColor(ColorTemplate.VORDIPLOM_COLORS[0]);
-        d2.setCircleColor(ColorTemplate.VORDIPLOM_COLORS[0]);
+        d2.setLineWidth(3f);
+        d2.setCircleRadius(5f);
+        d2.setColor(ColorTemplate.VORDIPLOM_COLORS[3]);
+        d2.setCircleColor(ColorTemplate.VORDIPLOM_COLORS[4]);
         d2.setDrawValues(false);
+        d2.setHighlightEnabled(true); // allow highlighting for DataSet
+        d2.setDrawHighlightIndicators(true);
+        d2.setHighLightColor(Color.BLUE);
+        d2.setColor(Color.RED);
 
         ArrayList<ILineDataSet> sets = new ArrayList<ILineDataSet>();
         sets.add(d1);
@@ -167,7 +174,7 @@ public class ResultActivity extends AppCompatActivity {
         return cd;
     }
 
-    private BarData generateDataBar() {
+   /* private BarData generateDataBar() {
 
         ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
 
@@ -182,7 +189,7 @@ public class ResultActivity extends AppCompatActivity {
         BarData cd = new BarData(d);
         cd.setBarWidth(0.9f);
         return cd;
-    }
+    }*/
 
     private void initialBasicAttributes(){
         double temp;
