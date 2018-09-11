@@ -25,7 +25,7 @@ public class BarChartItem extends ChartItem {
 
     @Override
     public int getItemType() {
-        return 3;
+        return TYPE_BARCHART;
     }
 
     @Override
@@ -51,12 +51,13 @@ public class BarChartItem extends ChartItem {
         holder.chart.getDescription().setEnabled(false);
         holder.chart.setDrawGridBackground(false);
         holder.chart.setDrawBarShadow(false);
+        holder.chart.setTouchEnabled(false);
 
-        XAxis xAxis = holder.chart.getXAxis();
+/*        XAxis xAxis = holder.chart.getXAxis();
         xAxis.setPosition(XAxisPosition.BOTTOM);
         xAxis.setTypeface(mTf);
         xAxis.setDrawGridLines(false);
-        xAxis.setDrawAxisLine(true);
+        xAxis.setDrawAxisLine(true);*/
         
         YAxis leftAxis = holder.chart.getAxisLeft();
         leftAxis.setTypeface(mTf);

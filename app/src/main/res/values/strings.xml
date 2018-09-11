@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BattleSimulation</string>
+    <string name="app_name">外域模拟器</string>
     <string name="percent">%</string>
     <string name="power">战力</string>
     <string name="faction">阵营</string>
@@ -26,6 +26,7 @@
     <string name="clone_super">超级</string>
     <string name="clone_medium">中级</string>
     <string name="clone_low">初级</string>
+    <string name="zero">0</string>
     <string-array name="faction">
         <item>奥鲁维之刃</item>
         <item>卡纳斯的启示</item>

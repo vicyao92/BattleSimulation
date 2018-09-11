@@ -12,6 +12,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import com.tiancaicc.springfloatingactionmenu.MenuItemView;
 import com.tiancaicc.springfloatingactionmenu.OnMenuActionListener;
 import com.tiancaicc.springfloatingactionmenu.SpringFloatingActionMenu;
 import com.vic.battlesimulation.R;
+import com.vic.battlesimulation.Utils.TextUtils;
 import com.vic.battlesimulation.activity.ResultActivity;
 import com.vic.battlesimulation.bean.BasicAttribute;
 import com.vic.battlesimulation.bean.Enemy;
@@ -90,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.etMediumClone)
     EditText etMediumClone;
 
-    private Snackbar snackbar;
     private MyAttribute myAttribute;
     private Enemy enemy;
     private SharedPreferences preferences;
@@ -183,22 +184,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int speed;
         long power;
         String name;
+
         //初始化我的属性
         name = faction.getSelectedItem().toString();
-        fire = Integer.valueOf(etFire.getText().toString());
-        luck = Integer.valueOf(etLuck.getText().toString());
-        speed = Integer.valueOf(etSpeed.getText().toString());
-        defence = Integer.valueOf(etDefence.getText().toString());
-        power = Long.valueOf(etPower.getText().toString());
+        fire = Integer.valueOf(TextUtils.textFormat(etFire.getText().toString()));
+        luck = Integer.valueOf(TextUtils.textFormat(etLuck.getText().toString()));
+        speed = Integer.valueOf(TextUtils.textFormat(etSpeed.getText().toString()));
+        defence = Integer.valueOf(TextUtils.textFormat(etDefence.getText().toString()));
+        power = Long.valueOf(TextUtils.textFormat(etPower.getText().toString()));
         initialMyAttribute(name, power, fire, defence, speed, luck);
-        //根据所选目标,生成敌人属性
 
+        //根据所选目标,生成敌人属性
         String target = spinnerTarget.getSelectedItem().toString().trim();
         openHelper = new MyDBHelper(this,"simulation",null,1);
         database = openHelper.getReadableDatabase();
-       /* Cursor cursor = database.query(ENEMY_TABLE, new String[] { "name","power",
-                        "fire", "defence","speed","luck"}, "name=?",
-                new String[] {target}, null, null, null);*/
         Cursor cursor = database.rawQuery("select * from "+ENEMY_TABLE+" where name = ?",new String[]{target});
         while (cursor.moveToNext()){
             power = cursor.getLong(cursor.getColumnIndex("power"));
@@ -211,10 +210,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         database.close();
 
         initialEnemyAttribute(target, power, fire, defence, speed, luck);
-/*        Bundle bundle = new Bundle();
-        bundle.putParcelable("EnemyAttr",enemy);
-        bundle.putParcelable("test", myAttribute);
-        intent.putExtra("bundle",bundle);*/
         intent.putExtra("MyAttribute", myAttribute);
         intent.putExtra("EnemyAttr",enemy);
         startActivity(intent);
@@ -224,21 +219,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BasicAttribute basicAttribute;
         basicAttribute = new BasicAttribute(name, power, fire, defence, speed, luck);
         myAttribute = new MyAttribute(basicAttribute);
-        myAttribute.setSatellite(Long.valueOf(etSatellite.getText().toString()));
+        myAttribute.setSatellite(Long.valueOf(TextUtils.textFormat(etSatellite.getText().toString())));
         myAttribute.setCloneAngel(spinnerAngel.getSelectedItemPosition());
         myAttribute.setCloneInsect(spinnerInsectQuene.getSelectedItemPosition());
         myAttribute.setCloneNano(spinnerNano.getSelectedItemPosition());
         myAttribute.setCloneMutant(spinnerMutant.getSelectedItemPosition());
         myAttribute.setCloneDragon(spinnerDragon.getSelectedItemPosition());
-        myAttribute.setCloneLevel(Integer.valueOf(etCloneLevel.getText().toString()));
-        myAttribute.setCloneLoss(Integer.valueOf(etCloneLoss.getText().toString()));
-        myAttribute.setCloneAdditionDamage(Long.valueOf(etCloneDamageAdditon.getText().toString()));
-        myAttribute.setCloneReductionDamage(Long.valueOf(etCloneDamageReduction.getText().toString()));
-        myAttribute.setCloneCricDamage(Long.valueOf(etCloneCrit.getText().toString()));
-        myAttribute.setCloneReflectionDamage(Long.valueOf(etCloneRefelection.getText().toString()));
-        myAttribute.setLowCloneNum(Integer.valueOf(etLowClone.getText().toString()));
-        myAttribute.setMediumCloneNum(Integer.valueOf(etMediumClone.getText().toString()));
-        myAttribute.setSuperCloneNum(Integer.valueOf(etSuperClone.getText().toString()));
+        myAttribute.setCloneLevel(Integer.valueOf(TextUtils.textFormat(etCloneLevel.getText().toString())));
+        myAttribute.setCloneLoss(Integer.valueOf(TextUtils.textFormat(etCloneLoss.getText().toString())));
+        myAttribute.setCloneAdditionDamage(Long.valueOf(TextUtils.textFormat(etCloneDamageAdditon.getText().toString())));
+        myAttribute.setCloneReductionDamage(Long.valueOf(TextUtils.textFormat(etCloneDamageReduction.getText().toString())));
+        myAttribute.setCloneCricDamage(Long.valueOf(TextUtils.textFormat(etCloneCrit.getText().toString())));
+        myAttribute.setCloneReflectionDamage(Long.valueOf(TextUtils.textFormat(etCloneRefelection.getText().toString())));
+        myAttribute.setLowCloneNum(Integer.valueOf(TextUtils.textFormat(etLowClone.getText().toString())));
+        myAttribute.setMediumCloneNum(Integer.valueOf(TextUtils.textFormat(etMediumClone.getText().toString())));
+        myAttribute.setSuperCloneNum(Integer.valueOf(TextUtils.textFormat(etSuperClone.getText().toString())));
         initialMibao(name);
     }
 

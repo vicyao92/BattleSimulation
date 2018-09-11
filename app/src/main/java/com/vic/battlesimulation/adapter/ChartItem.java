@@ -9,6 +9,7 @@ public abstract class ChartItem {
 
     protected static final int TYPE_LINECHART = 0;
     protected static final int TYPE_PIECHART = 1;
+    protected static final int TYPE_BARCHART = 2;
 
     protected ChartData<?> mChartData;
 
