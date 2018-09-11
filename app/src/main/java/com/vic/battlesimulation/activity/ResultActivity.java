@@ -82,6 +82,9 @@ public class ResultActivity extends AppCompatActivity {
         initialChart();
     }
 
+    /**
+     * 计算克隆体战损数量
+     */
     private void cacCloneLoss() {
         int loss = myAttribute.getCloneLoss();
         double powerLossRate = (1-(double)myCurrentPowerPerTurn.get(myCurrentPowerPerTurn.size()-1)/(double)myCurrentPowerPerTurn.get(0));
@@ -91,6 +94,9 @@ public class ResultActivity extends AppCompatActivity {
         superNum =(int)(myAttribute.getSuperCloneNum() * lossRate);
     }
 
+    /**
+     * 图标配置初始化
+     */
     private void initialChart() {
         ListView lv = findViewById(R.id.listView1);
 
@@ -125,6 +131,10 @@ public class ResultActivity extends AppCompatActivity {
         return cd;
     }
 
+    /**
+     * @return
+     * 初始化线型图数据
+     */
     private LineData generateDataLine() {
 
         ArrayList<Entry> e1 = new ArrayList<Entry>();
@@ -165,6 +175,10 @@ public class ResultActivity extends AppCompatActivity {
         return cd;
     }
 
+    /**
+     * @return
+     * 初始化条状图
+     */
     private BarData generateDataBar() {
 
         ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
@@ -182,6 +196,9 @@ public class ResultActivity extends AppCompatActivity {
         return cd;
     }
 
+    /**
+     * 初始化战斗相关的一些系数
+     */
     private void initialBasicAttributes(){
         double temp;
         long myFire;
@@ -233,13 +250,15 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 开始模拟战斗流程
+     */
     private void fight() {
         int round;
         round = 1;
         mySpeed = myAttribute.getMyAttribute().getSpeed();
         enemySpeed = enemy.getEnemyAttribute().getSpeed();
         while (!isDone) {
-            Log.d("3333", "----------------------" + "第" + round + "回合" + "-----------------");
             switch (round) {
                 case 1:
                     if (myAttribute.getCloneDragon() != 0) {
@@ -272,20 +291,14 @@ public class ResultActivity extends AppCompatActivity {
 
     private boolean attack(int round) {
         cacDamage(myAttribute.getMyAttribute().getCurrentPower(), enemy.getEnemyAttribute().getCurrentPower(), round);
-        Log.d("3333", "我方造成" + myDamage + "伤害");
         enemyCurrentPower = enemyCurrentPower - myDamage;
 
         if (enemyCurrentPower <= 0) {
             isDone = true;
-            Log.d("3333", "战斗胜利");
             enemyCurrentPower = 0;
-            Log.d("3333",enemyCurrentPowerPerTurn.size()+"         "+myCurrentPowerPerTurn.size());
-            Log.d("3333", "当前回合" + round);
-            Log.d("3333", "敌方剩余" + enemyCurrentPower + "战力");
             return true;
         } else {
             enemy.getEnemyAttribute().setCurrentPower(enemyCurrentPower);
-            Log.d("3333", "敌方剩余" + enemyCurrentPower + "战力");
             return false;
         }
     }
@@ -294,25 +307,22 @@ public class ResultActivity extends AppCompatActivity {
         cacDamage(myAttribute.getMyAttribute().getCurrentPower(), enemy.getEnemyAttribute().getCurrentPower(), round);
         myCurrentPower = myCurrentPower - enemyDamage;
         enemyCurrentPower = enemyCurrentPower - myAttribute.getMbFan() - myAttribute.getCloneReflectionDamage();
-        Log.d("3333", "敌方造成" + enemyDamage + "伤害");
         if (myCurrentPower <= 0) {
-            Log.d("3333", "失败");
-            Log.d("3333", "我方剩余 0 战力");
             myCurrentPower = 0;
             return true;
         } else {
-            Log.d("3333", "我方剩余" + myCurrentPower + "战力");
             myAttribute.getMyAttribute().setCurrentPower(myCurrentPower);
             enemy.getEnemyAttribute().setCurrentPower(enemyCurrentPower);
             return false;
         }
     }
 
+    /**
+     * 初始化克隆体的特殊伤害
+     */
     private void initialCloneDamge() {
         angel = myAttribute.getCloneAngel() == 0 ? 0 : 24000 * myAttribute.getCloneLevel() +
                 30000 * (myAttribute.getCloneAngel() - 1);
-        /*insect = myAttribute.getCloneInsect() == 0? 0 : 24000 * myAttribute.getCloneLevel() +
-                30000*(myAttribute.getCloneAngel()-1);*/
         nano = myAttribute.getCloneNano() == 0 ? 0 : 16000 * myAttribute.getCloneLevel() +
                 20000 * (myAttribute.getCloneNano() - 1);
         mutant = myAttribute.getCloneMutant() == 0 ? 0 : (long) (0.0048 *
@@ -367,6 +377,10 @@ public class ResultActivity extends AppCompatActivity {
         enemy.getEnemyAttribute().setDamage(enemyDamage);
     }
 
+    /**
+     * @param round
+     * 我方机动大于等于对方机动,我方先手
+     */
     private void myTurnFirst(int round) {
         if (!isDone) {
             isDone = attack(round);
@@ -376,6 +390,10 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * @param round
+     * 我方机动小于敌方机动,我方后手
+     */
     private void enemyTurnFirst(int round) {
         if (!isDone) {
             isDone = beingAttacked(round);
@@ -386,7 +404,8 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     /**
-     * @param round 根据回合数增加或者减免特殊伤害
+     * @param round
+     * 根据回合数增加或者减免特殊伤害
      */
     private void manageSpecialDamage(int round) {
         switch (round) {

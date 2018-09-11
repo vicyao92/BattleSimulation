@@ -29,6 +29,7 @@ import com.tiancaicc.springfloatingactionmenu.OnMenuActionListener;
 import com.tiancaicc.springfloatingactionmenu.SpringFloatingActionMenu;
 import com.vic.battlesimulation.R;
 import com.vic.battlesimulation.Utils.TextUtils;
+import com.vic.battlesimulation.activity.ManageSettingActivity;
 import com.vic.battlesimulation.activity.ResultActivity;
 import com.vic.battlesimulation.bean.BasicAttribute;
 import com.vic.battlesimulation.bean.Enemy;
@@ -129,6 +130,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initialFab();
     }
 
+    /**
+     * 初始化浮动按钮
+     */
     private void initialFab() {
         final com.melnykov.fab.FloatingActionButton fab = new com.melnykov.fab.FloatingActionButton(this);
         fab.setType(com.melnykov.fab.FloatingActionButton.TYPE_NORMAL);
@@ -141,7 +145,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .fab(fab)
                 //添加菜单按钮参数依次是背景颜色,图标,标签,标签的颜色,点击事件
                 .addMenuItem(R.color.add, R.drawable.save24, "保存配置", R.color.white,this)
-                .addMenuItem(R.color.delete, R.drawable.load24, "读取配置", R.color.white,this)
+                .addMenuItem(R.color.load, R.drawable.load24, "读取配置", R.color.white,this)
+                .addMenuItem(R.color.delete, R.drawable.manage24, "管理配置", R.color.white,this)
                 //you can choose menu layout animation
                 //设置动画类型
                 .animationType(SpringFloatingActionMenu.ANIMATION_TYPE_BLOOM)
@@ -176,6 +181,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * 开始模拟
+     */
     private void doSimulation() {
         Intent intent = new Intent(MainActivity.this, ResultActivity.class);
         int fire;
@@ -215,6 +223,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    /**
+     * @param name
+     * @param power
+     * @param fire
+     * @param defence
+     * @param speed
+     * @param luck
+     * 初始化我的属性
+     */
     private void initialMyAttribute(String name, long power, int fire, int defence, int speed, int luck) {
         BasicAttribute basicAttribute;
         basicAttribute = new BasicAttribute(name, power, fire, defence, speed, luck);
@@ -237,12 +254,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initialMibao(name);
     }
 
+    /**
+     * @param name
+     * @param power
+     * @param fire
+     * @param defence
+     * @param speed
+     * @param luck
+     * 初始化敌人属性
+     */
     private void initialEnemyAttribute(String name, long power, int fire, int defence, int speed, int luck) {
         BasicAttribute basicAttribute;
         basicAttribute = new BasicAttribute(name, power, fire, defence, speed, luck);
         enemy = new Enemy(basicAttribute);
     }
 
+    /**
+     * 第一次运行时,添加攻击目标的数据至数据库中
+     */
     private void firstRun() {
         preferences = getSharedPreferences("setting", 0);
         Boolean first_run = preferences.getBoolean("First", true);
@@ -275,6 +304,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * @param faction
+     * 根据阵营初始化秘宝伤害
+     */
     private void initialMibao(String faction) {
         switch (faction) {
             case "奥鲁维之刃":
@@ -343,6 +376,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 springFloatingActionMenu.hideMenu();
                 showLoadDialog();
                 break;
+            case "管理配置":
+                springFloatingActionMenu.hideMenu();
+                Intent intent = new Intent(MainActivity.this, ManageSettingActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
@@ -375,6 +413,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.setCanceledOnTouchOutside(false); //设置弹出框失去焦点是否隐藏,即点击屏蔽其它地方是否隐藏
         dialog.show();
     }
+
     private void showLoadDialog() {
         //读取已保存配置名称
         openHelper = new MyDBHelper(this,"simulation",null,1);
@@ -416,6 +455,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.show();
     }
 
+    /**
+     * @param nickname
+     * 保存配置
+     */
     private void saveSetting(String nickname){
         openHelper = new MyDBHelper(this,"simulation",null,1);
         database = openHelper.getWritableDatabase();
@@ -455,6 +498,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             this.activity = new WeakReference<MainActivity>(activity);
         }
 
+        /**
+         * @param msg
+         */
         @Override
         public void handleMessage(android.os.Message msg) {
             MainActivity theClass = activity.get();
