@@ -225,7 +225,94 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
-            <include layout="@layout/super_clone_settings"/>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:elevation="10dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardUseCompatPadding="true">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:context=".app.MainActivity">
+
+                    <TextView
+                        android:id="@+id/tvCloneLoss"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/clone_loss"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSuperClone"
+                        app:layout_constraintVertical_bias="0.035" />
+
+                    <EditText
+                        android:id="@+id/etCloneLoss"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:hint="0"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:text="@string/zero"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvCloneLoss"
+                        app:layout_constraintStart_toEndOf="@+id/tvCloneLoss"
+                        app:layout_constraintTop_toTopOf="@+id/tvCloneLoss"
+                        app:layout_constraintVertical_bias="0.685" />
+
+                    <TextView
+                        android:id="@+id/tvCloneLevel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/clone_level"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvCloneLoss"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.559"
+                        app:layout_constraintStart_toEndOf="@+id/tvCloneLoss"
+                        app:layout_constraintTop_toTopOf="@+id/tvCloneLoss"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <EditText
+                        android:id="@+id/etCloneLevel"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:hint="0"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        android:text="@string/zero"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvCloneLevel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.312"
+                        app:layout_constraintStart_toEndOf="@+id/tvCloneLevel"
+                        app:layout_constraintTop_toTopOf="@+id/tvCloneLevel"
+                        app:layout_constraintVertical_bias="0.685" />
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v7.widget.CardView>
             <include layout="@layout/clone_qh_settings"/>
             <Button
                 android:id="@+id/save"

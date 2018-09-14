@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".activity.ResultActivity" />
         <activity android:name=".activity.ManageSettingActivity" />
-        <activity android:name=".activity.CloneSettingActivity"></activity>
+        <activity android:name=".activity.CloneSettingActivity" />
+        <activity android:name=".activity.RobotSettingActivity"></activity>
     </application>
 
 </manifest>

@@ -46,6 +46,10 @@
     <string name="s_xkl">虚空龙</string>
     <string name="save">保存</string>
     <string name="lksjs">兰克兽减损</string>
+    <string name="guard">伊甸守卫V型</string>
+    <string name="hunter">伊甸猎手V型</string>
+    <string name="haty">维西尼亚的黑暗投影</string>
+    <string name="select_target">请选择攻击目标</string>
     <string-array name="faction">
         <item>奥鲁维之刃</item>
         <item>卡纳斯的启示</item>
@@ -53,6 +57,7 @@
         <item>深渊的咆哮</item>
     </string-array>
     <string-array name="clone">
+        <item>无</item>
         <item>未强化</item>
         <item>已强化</item>
     </string-array>
@@ -66,5 +71,9 @@
         <item>M02徇星金蝰蛇</item>
         <item>M02元星霍德尔</item>
         <item>M01神龙</item>
+    </string-array>
+    <string-array name="robot">
+        <item>无</item>
+        <item>上阵</item>
     </string-array>
 </resources>

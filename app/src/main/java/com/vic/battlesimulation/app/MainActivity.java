@@ -7,12 +7,14 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +22,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.melnykov.fab.FloatingActionButton;
 import com.tiancaicc.springfloatingactionmenu.MenuItemView;
 import com.tiancaicc.springfloatingactionmenu.OnMenuActionListener;
 import com.tiancaicc.springfloatingactionmenu.SpringFloatingActionMenu;
@@ -28,7 +34,9 @@ import com.vic.battlesimulation.Utils.TextUtils;
 import com.vic.battlesimulation.activity.CloneSettingActivity;
 import com.vic.battlesimulation.activity.ManageSettingActivity;
 import com.vic.battlesimulation.activity.ResultActivity;
+import com.vic.battlesimulation.activity.RobotSettingActivity;
 import com.vic.battlesimulation.bean.BasicAttribute;
+import com.vic.battlesimulation.bean.Domain;
 import com.vic.battlesimulation.bean.Enemy;
 import com.vic.battlesimulation.bean.MyAttribute;
 import com.vic.battlesimulation.db.MyDBHelper;
@@ -57,30 +65,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText etLuck;
     @BindView(R.id.etSatellite)
     EditText etSatellite;
-    @BindView(R.id.etCloneLoss)
-    EditText etCloneLoss;
-    @BindView(R.id.etCloneLevel)
-    EditText etCloneLevel;
-    @BindView(R.id.etCloneDamageAdditon)
-    EditText etCloneDamageAdditon;
-    @BindView(R.id.etCloneDamageReduction)
-    EditText etCloneDamageReduction;
-    @BindView(R.id.etCloneCrit)
-    EditText etCloneCrit;
-    @BindView(R.id.etCloneRefelection)
-    EditText etCloneRefelection;
-    @BindView(R.id.spinnerAngel)
-    Spinner spinnerAngel;
-    @BindView(R.id.spinnerInsectQuene)
-    Spinner spinnerInsectQuene;
-    @BindView(R.id.spinnerNano)
-    Spinner spinnerNano;
-    @BindView(R.id.spinnerMutant)
-    Spinner spinnerMutant;
-    @BindView(R.id.spinnerDragon)
-    Spinner spinnerDragon;
-    @BindView(R.id.spinnerTarget)
-    Spinner spinnerTarget;
     @BindView(R.id.btnSimulation)
     Button btnSimulation;
     @BindView(R.id.etSuperClone)
@@ -89,12 +73,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText etLowClone;
     @BindView(R.id.etMediumClone)
     EditText etMediumClone;
+    @BindView(R.id.btnTarget)
+    Button btnTarget;
 
     private MyAttribute myAttribute;
     private Enemy enemy;
     private SharedPreferences preferences;
     //数据库操作
-    private MyDBHelper openHelper ;
+    private MyDBHelper openHelper;
     private SQLiteDatabase database;
     private static final String ENEMY_TABLE = "Enemy";
     private static final String MY_TABLE = "MyAttr";
@@ -114,7 +100,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
     private AlertDialog dialog;
     private MyHandler handler;
-    private static String loadTarget ;
+    private static String loadTarget;
+    private ArrayList<Domain> options1Items = new ArrayList<>();
+    private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
+    private SharedPreferences autoSave;
+    private boolean isReady;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,14 +115,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         createFabFrameAnim();
         createFabReverseFrameAnim();
         initialFab();
+        initialTargetData();
+    }
+
+    private void initialTargetData() {
+        //初始化目标数据源
+        options1Items.add(new Domain("M", "01"));
+        options1Items.add(new Domain("M", "02"));
+        options1Items.add(new Domain("M", "03"));
+
+        ArrayList<String> options2Items_01 = new ArrayList<>();
+        options2Items_01.add("神龙");
+        ArrayList<String> options2Items_02 = new ArrayList<>();
+        options2Items_02.add("元星曼徳斯");
+        options2Items_02.add("浮丘");
+        options2Items_02.add("海尼拉星炽天使");
+        options2Items_02.add("元星掠夺第4波");
+        options2Items_02.add("元星掠夺第5波");
+        options2Items_02.add("投影5级");
+        options2Items_02.add("徇星金蝰蛇");
+        options2Items_02.add("元星霍德尔");
+        ArrayList<String> options2Items_03 = new ArrayList<>();
+        options2Items_03.add("待更新");
+
+        options2Items.add(options2Items_01);
+        options2Items.add(options2Items_02);
+        options2Items.add(options2Items_03);
     }
 
     /**
      * 初始化浮动按钮
      */
     private void initialFab() {
-        final com.melnykov.fab.FloatingActionButton fab = new com.melnykov.fab.FloatingActionButton(this);
-        fab.setType(com.melnykov.fab.FloatingActionButton.TYPE_NORMAL);
+        final FloatingActionButton fab = new FloatingActionButton(this);
+        fab.setType(FloatingActionButton.TYPE_NORMAL);
         fab.setImageDrawable(frameAnim);
         fab.setColorPressedResId(R.color.colorPrimary);
         fab.setColorNormalResId(R.color.colorAccent);
@@ -141,11 +157,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         springFloatingActionMenu = new SpringFloatingActionMenu.Builder(this)
                 .fab(fab)
                 //添加菜单按钮参数依次是背景颜色,图标,标签,标签的颜色,点击事件
-                .addMenuItem(R.color.add, R.drawable.save24, "保存配置", R.color.white,this)
-                .addMenuItem(R.color.load, R.drawable.load24, "读取配置", R.color.white,this)
-                .addMenuItem(R.color.delete, R.drawable.manage24, "管理配置", R.color.white,this)
-                .addMenuItem(R.color.purple, R.drawable.clone, "克隆体配置", R.color.white,this)
-                //you can choose menu layout animation
+                .addMenuItem(R.color.add, R.drawable.save24, "保存配置", R.color.white, this)
+                .addMenuItem(R.color.load, R.drawable.load24, "读取配置", R.color.white, this)
+                .addMenuItem(R.color.delete, R.drawable.manage24, "管理配置", R.color.white, this)
+                .addMenuItem(R.color.purple, R.drawable.clone, "克隆体配置", R.color.white, this)
+                .addMenuItem(R.color.robot, R.drawable.robot, "机器人配置", R.color.white, this)
                 //设置动画类型
                 .animationType(SpringFloatingActionMenu.ANIMATION_TYPE_TUMBLR)
                 //设置reveal效果的颜色
@@ -170,11 +186,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
     }
 
-    @OnClick({R.id.btnSimulation})
+    @OnClick({R.id.btnSimulation,R.id.btnTarget})
     protected void MyClick(View v) {
         switch (v.getId()) {
             case R.id.btnSimulation:
-                doSimulation();
+                switch (btnTarget.getText().toString()) {
+                    case "请选择攻击目标":
+                        Toast.makeText(MainActivity.this, "未选择攻击目标", Toast.LENGTH_LONG)
+                                .show();
+                        break;
+                    case "M03待更新":
+                        Toast.makeText(MainActivity.this, "M03数据未更新,敬请期待", Toast.LENGTH_LONG)
+                                .show();
+                        break;
+                    default:
+                        isReady = notNullJudge();
+                        if (isReady){
+                            doSimulation();
+                        }else {
+                            Toast.makeText(MainActivity.this,"四维及战力不能为空",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        break;
+                }
+                break;
+            case R.id.btnTarget:
+                selectTarget();
                 break;
         }
     }
@@ -201,11 +238,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initialMyAttribute(name, power, fire, defence, speed, luck);
 
         //根据所选目标,生成敌人属性
-        String target = spinnerTarget.getSelectedItem().toString().trim();
-        openHelper = new MyDBHelper(this,"simulation",null,1);
+        String target = btnTarget.getText().toString().trim();
+        openHelper = new MyDBHelper(this, "simulation", null, 1);
         database = openHelper.getReadableDatabase();
-        Cursor cursor = database.rawQuery("select * from "+ENEMY_TABLE+" where name = ?",new String[]{target});
-        while (cursor.moveToNext()){
+        Cursor cursor = database.rawQuery("select * from " + ENEMY_TABLE + " where name = ?", new String[]{target});
+        while (cursor.moveToNext()) {
             power = cursor.getLong(cursor.getColumnIndex("power"));
             fire = cursor.getInt(cursor.getColumnIndex("fire"));
             defence = cursor.getInt(cursor.getColumnIndex("defence"));
@@ -214,10 +251,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         cursor.close();
         database.close();
-
+        SharedPreferences sp = getSharedPreferences(MyApplication.EXTRA_SETTING,0);
+        if (sp.getInt("guard",0)!=0){
+            fire -=1;
+            defence -= 1;
+            speed -= 1;
+            luck -=1;
+        }
+        if (sp.getInt("haty",0)!=0){
+            fire -= 3;
+        }
         initialEnemyAttribute(target, power, fire, defence, speed, luck);
         intent.putExtra("MyAttribute", myAttribute);
-        intent.putExtra("EnemyAttr",enemy);
+        intent.putExtra("EnemyAttr", enemy);
         startActivity(intent);
     }
 
@@ -227,25 +273,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param fire
      * @param defence
      * @param speed
-     * @param luck
-     * 初始化我的属性
+     * @param luck    初始化我的属性
      */
     private void initialMyAttribute(String name, long power, int fire, int defence, int speed, int luck) {
         BasicAttribute basicAttribute;
         basicAttribute = new BasicAttribute(name, power, fire, defence, speed, luck);
         myAttribute = new MyAttribute(basicAttribute);
         myAttribute.setSatellite(Long.valueOf(TextUtils.textFormat(etSatellite.getText().toString())));
-        myAttribute.setCloneAngel(spinnerAngel.getSelectedItemPosition());
-        myAttribute.setCloneInsect(spinnerInsectQuene.getSelectedItemPosition());
-        myAttribute.setCloneNano(spinnerNano.getSelectedItemPosition());
-        myAttribute.setCloneMutant(spinnerMutant.getSelectedItemPosition());
-        myAttribute.setCloneDragon(spinnerDragon.getSelectedItemPosition());
-        myAttribute.setCloneLevel(Integer.valueOf(TextUtils.textFormat(etCloneLevel.getText().toString())));
-        myAttribute.setCloneLoss(Integer.valueOf(TextUtils.textFormat(etCloneLoss.getText().toString())));
-        myAttribute.setCloneAdditionDamage(Long.valueOf(TextUtils.textFormat(etCloneDamageAdditon.getText().toString())));
-        myAttribute.setCloneReductionDamage(Long.valueOf(TextUtils.textFormat(etCloneDamageReduction.getText().toString())));
-        myAttribute.setCloneCricDamage(Long.valueOf(TextUtils.textFormat(etCloneCrit.getText().toString())));
-        myAttribute.setCloneReflectionDamage(Long.valueOf(TextUtils.textFormat(etCloneRefelection.getText().toString())));
         myAttribute.setLowCloneNum(Integer.valueOf(TextUtils.textFormat(etLowClone.getText().toString())));
         myAttribute.setMediumCloneNum(Integer.valueOf(TextUtils.textFormat(etMediumClone.getText().toString())));
         myAttribute.setSuperCloneNum(Integer.valueOf(TextUtils.textFormat(etSuperClone.getText().toString())));
@@ -258,8 +292,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param fire
      * @param defence
      * @param speed
-     * @param luck
-     * 初始化敌人属性
+     * @param luck    初始化敌人属性
      */
     private void initialEnemyAttribute(String name, long power, int fire, int defence, int speed, int luck) {
         BasicAttribute basicAttribute;
@@ -274,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         preferences = getSharedPreferences("setting", 0);
         Boolean first_run = preferences.getBoolean("First", true);
         if (first_run) {
-            openHelper = new MyDBHelper(this,"simulation",null,1);
+            openHelper = new MyDBHelper(this, "simulation", null, 1);
             database = openHelper.getWritableDatabase();
             database.beginTransaction();
             database.execSQL("insert into Enemy(name,power,fire,defence,speed,luck) values(" +
@@ -298,13 +331,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             database.setTransactionSuccessful();
             database.endTransaction();
             database.close();
-            preferences.edit().putBoolean("First",false).apply();
+            preferences.edit().putBoolean("First", false).apply();
+        }else {
+            loadLastData();
         }
     }
 
     /**
-     * @param faction
-     * 根据阵营初始化秘宝伤害
+     * @param faction 根据阵营初始化秘宝伤害
      */
     private void initialMibao(String faction) {
         switch (faction) {
@@ -357,7 +391,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onBackPressed() {
         if (springFloatingActionMenu.isMenuOpen()) {
             springFloatingActionMenu.hideMenu();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -365,7 +399,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         MenuItemView menuItemView = (MenuItemView) view;
-        switch (menuItemView.getLabelTextView().getText().toString()){
+        switch (menuItemView.getLabelTextView().getText().toString()) {
             case "保存配置":
                 springFloatingActionMenu.hideMenu();
                 showSaveDialog();
@@ -381,8 +415,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case "克隆体配置":
                 springFloatingActionMenu.hideMenu();
-                Intent i = new Intent(MainActivity.this, CloneSettingActivity.class);
-                startActivity(i);
+                Intent clone= new Intent(MainActivity.this, CloneSettingActivity.class);
+                startActivity(clone);
+                break;
+            case "机器人配置":
+                springFloatingActionMenu.hideMenu();
+                Intent robot = new Intent(MainActivity.this, RobotSettingActivity.class);
+                startActivity(robot);
                 break;
         }
     }
@@ -396,11 +435,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String nickname = edit.getText().toString();
-                if (nickname.equals("")){
-                    Toast.makeText(MainActivity.this, "名字不能为空" , Toast.LENGTH_LONG).show();
-                }else {
+                if (nickname.equals("")) {
+                    Toast.makeText(MainActivity.this, "名字不能为空", Toast.LENGTH_LONG).show();
+                } else {
                     saveSetting(nickname);
-                    Toast.makeText(MainActivity.this, "保存成功" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "保存成功", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -419,11 +458,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showLoadDialog() {
         //读取已保存配置名称
-        openHelper = new MyDBHelper(this,"simulation",null,1);
+        openHelper = new MyDBHelper(this, "simulation", null, 1);
         database = openHelper.getWritableDatabase();
-        Cursor cursor = database.rawQuery("select nickname from "+MY_TABLE,new String[]{});
+        Cursor cursor = database.rawQuery("select nickname from " + MY_TABLE, new String[]{});
         final List<String> temp = new ArrayList<String>();
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             temp.add(cursor.getString(cursor.getColumnIndex("nickname")));
         }
         final String[] items = new String[temp.size()];
@@ -437,21 +476,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("请选择要加载的配置");
         builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialog, int which) {
+                loadTarget = items[which];
+                new Thread(new Runnable() {
                     @Override
-                    public void onClick(final DialogInterface dialog, int which) {
-                        loadTarget = items[which];
-                                new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Message message = new Message();
-                                message.what = 0;
-                                handler.sendMessage(message);
-                                dialog.dismiss();
-                            }
-                        }).start();
+                    public void run() {
+                        Message message = new Message();
+                        message.what = 0;
+                        handler.sendMessage(message);
                         dialog.dismiss();
                     }
-                }).create();
+                }).start();
+                dialog.dismiss();
+            }
+        }).create();
         builder.setCancelable(true);    //设置按钮是否可以按返回键取消,false则不可以取消
         dialog = builder.create();  //创建对话框
         dialog.setCanceledOnTouchOutside(false); //设置弹出框失去焦点是否隐藏,即点击屏蔽其它地方是否隐藏
@@ -459,40 +498,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * @param nickname
-     * 保存配置
+     * @param nickname 保存配置
      */
-    private void saveSetting(String nickname){
-        openHelper = new MyDBHelper(this,"simulation",null,1);
+    private void saveSetting(String nickname) {
+        openHelper = new MyDBHelper(this, "simulation", null, 1);
         database = openHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         database.beginTransaction();
-        cv.put("name",faction.getSelectedItem().toString());
-        cv.put("power",etPower.getText().toString());
-        cv.put("fire",etFire.getText().toString());
-        cv.put("defence",etDefence.getText().toString());
-        cv.put("speed",etSpeed.getText().toString());
-        cv.put("luck",etLuck.getText().toString());
-        cv.put("supernum",etSuperClone.getText().toString());
-        cv.put("medium",etMediumClone.getText().toString());
-        cv.put("lownum",etLowClone.getText().toString());
-        cv.put("satellite",etSatellite.getText().toString());
-        cv.put("loss",etCloneLoss.getText().toString());
-        cv.put("level",etCloneLevel.getText().toString());
-        cv.put("clonezeng",etCloneDamageAdditon.getText().toString());
-        cv.put("clonejian",etCloneDamageReduction.getText().toString());
-        cv.put("clonebao",etCloneCrit.getText().toString());
-        cv.put("clonefan",etCloneRefelection.getText().toString());
-        cv.put("angel",spinnerAngel.getSelectedItemPosition());
-        cv.put("insect",spinnerInsectQuene.getSelectedItemPosition());
-        cv.put("nano",spinnerNano.getSelectedItemPosition());
-        cv.put("mutant",spinnerMutant.getSelectedItemPosition());
-        cv.put("dragon",spinnerDragon.getSelectedItemPosition());
-        cv.put("nickname",nickname);
+        cv.put("name", faction.getSelectedItem().toString());
+        cv.put("power", etPower.getText().toString());
+        cv.put("fire", etFire.getText().toString());
+        cv.put("defence", etDefence.getText().toString());
+        cv.put("speed", etSpeed.getText().toString());
+        cv.put("luck", etLuck.getText().toString());
+        cv.put("supernum", etSuperClone.getText().toString());
+        cv.put("medium", etMediumClone.getText().toString());
+        cv.put("lownum", etLowClone.getText().toString());
+        cv.put("satellite", etSatellite.getText().toString());
+        cv.put("nickname", nickname);
         database.insertOrThrow(MY_TABLE, null, cv);
         database.setTransactionSuccessful();
         database.endTransaction();
         database.close();
+    }
+
+    /**
+     * 攻击目标选择器
+     */
+    private void selectTarget() {
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                //返回的分别是每个级别的选中位置
+                String tx = options1Items.get(options1).getPickerViewText()
+                        + options2Items.get(options1).get(options2);
+                btnTarget.setText(tx);
+            }
+        })
+                .setTitleText("攻打目标选择")
+                .setSubmitText("确定")//确定按钮文字
+                .setCancelText("取消")//取消按钮文字
+                .setContentTextSize(20)//设置滚轮文字大小
+                .setDividerColor(Color.LTGRAY)//设置分割线的颜色
+                .setSelectOptions(0, 1)//默认选中项
+                .setSubmitColor(R.color.add)//确定按钮文字颜色
+                .setCancelColor(R.color.load)//取消按钮文字颜色
+                .setBgColor(Color.LTGRAY)
+                .setTitleBgColor(Color.WHITE)
+                .setTitleColor(Color.BLACK)
+                .setTextColorCenter(Color.BLACK)
+                .isRestoreItem(true)//切换时是否还原，设置默认选中第一项。
+                .isCenterLabel(true) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .setBackgroundId(0x00000000) //设置外部遮罩颜色
+                .build();
+
+        pvOptions.setPicker(options1Items, options2Items);//二级选择器
+        pvOptions.show();
     }
 
     private static class MyHandler extends Handler {
@@ -503,27 +564,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         /**
-         * @param msg
+         * @param msg 读取配置,更新UI
          */
         @Override
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
             MainActivity theClass = activity.get();
             switch (msg.what) {
                 case 0: {
                     MyDBHelper openHelper = new MyDBHelper(
-                            MyApplication.getContext(),"simulation",null,1);
+                            MyApplication.getContext(), "simulation", null, 1);
                     SQLiteDatabase database = openHelper.getWritableDatabase();
                     Cursor cursor = database.rawQuery(
-                            "select * from "+MY_TABLE+" WHERE nickname = ?",new String[]{loadTarget});
-                    while (cursor.moveToNext()){
-                        int faction = 0 ;
-                        switch (cursor.getString(cursor.getColumnIndex("name"))){
-                            case "奥鲁维之刃":faction=0;break;
-                            case "卡纳斯的启示":faction=1;break;
-                            case "游荡者之歌":faction=2;break;
-                            case "深渊的咆哮":faction=3;break;
+                            "select * from " + MY_TABLE + " WHERE nickname = ?", new String[]{loadTarget});
+                    while (cursor.moveToNext()) {
+                        int faction = 0;
+                        switch (cursor.getString(cursor.getColumnIndex("name"))) {
+                            case "奥鲁维之刃":
+                                faction = 0;
+                                break;
+                            case "卡纳斯的启示":
+                                faction = 1;
+                                break;
+                            case "游荡者之歌":
+                                faction = 2;
+                                break;
+                            case "深渊的咆哮":
+                                faction = 3;
+                                break;
                         }
-                        theClass.faction.setSelection(faction,true);
+                        theClass.faction.setSelection(faction, true);
                         theClass.etPower.setText(String.valueOf(cursor.getLong(cursor.getColumnIndex("power"))));
                         theClass.etFire.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex("fire"))));
                         theClass.etDefence.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex("defence"))));
@@ -533,17 +602,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         theClass.etMediumClone.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex("medium"))));
                         theClass.etLowClone.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex("lownum"))));
                         theClass.etSatellite.setText(String.valueOf(cursor.getLong(cursor.getColumnIndex("satellite"))));
-                        theClass.etCloneLoss.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex("loss"))));
-                        theClass.etCloneLevel.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex("level"))));
-                        theClass.etCloneDamageAdditon.setText(String.valueOf(cursor.getLong(cursor.getColumnIndex("clonezeng"))));
-                        theClass.etCloneDamageReduction.setText(String.valueOf(cursor.getLong(cursor.getColumnIndex("clonejian"))));
-                        theClass.etCloneCrit.setText(String.valueOf(cursor.getLong(cursor.getColumnIndex("clonebao"))));
-                        theClass.etCloneRefelection.setText(String.valueOf(cursor.getLong(cursor.getColumnIndex("clonefan"))));
-                        theClass.spinnerAngel.setSelection(cursor.getInt(cursor.getColumnIndex("angel")),true);
-                        theClass.spinnerInsectQuene.setSelection(cursor.getInt(cursor.getColumnIndex("insect")),true);
-                        theClass.spinnerNano.setSelection(cursor.getInt(cursor.getColumnIndex("nano")),true);
-                        theClass.spinnerMutant.setSelection(cursor.getInt(cursor.getColumnIndex("mutant")),true);
-                        theClass.spinnerDragon.setSelection(cursor.getInt(cursor.getColumnIndex("dragon")),true);
                     }
                     cursor.close();
                     database.close();
@@ -555,6 +613,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onDestroy() {
+        autoSave = getSharedPreferences(MyApplication.LAST_SETTING, 0);
+        SharedPreferences.Editor editor = autoSave.edit();
+        editor.putInt("faction",faction.getSelectedItemPosition());
+        editor.putString("power", etPower.getText().toString());
+        editor.putString("fire", etFire.getText().toString());
+        editor.putString("defense", etDefence.getText().toString());
+        editor.putString("speed", etSpeed.getText().toString());
+        editor.putString("luck", etLuck.getText().toString());
+        editor.putString("satellite", etSatellite.getText().toString());
+        editor.putString("lowNum", etLowClone.getText().toString());
+        editor.putString("mediumNum", etMediumClone.getText().toString());
+        editor.putString("superNum", etSuperClone.getText().toString());
+        editor.apply();
         super.onDestroy();
+    }
+
+    /**
+     * @return
+     * 四维及战力非空判断
+     */
+    private boolean notNullJudge() {
+        if (etFire.getText().toString().equals("") || etDefence.getText().toString().equals("") ||
+                etSpeed.getText().toString().equals("") || etLuck.getText().toString().equals("") ||
+                etPower.getText().toString().equals("")) {
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    private void loadLastData(){
+        autoSave = getSharedPreferences(MyApplication.LAST_SETTING, 0);
+        faction.setSelection(autoSave.getInt("faction",0));
+        etPower.setText(autoSave.getString("power",""));
+        etFire.setText(autoSave.getString("fire",""));
+        etDefence.setText(autoSave.getString("defense",""));
+        etSpeed.setText(autoSave.getString("speed",""));
+        etLuck.setText(autoSave.getString("luck",""));
+        etSatellite.setText(autoSave.getString("satellite",""));
+        etLowClone.setText(autoSave.getString("lowNum",""));
+        etMediumClone.setText(autoSave.getString("mediumNum",""));
+        etSuperClone.setText(autoSave.getString("superNum",""));
     }
 }

@@ -7,7 +7,6 @@ import android.graphics.Shader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,10 +21,10 @@ import butterknife.OnClick;
 
 public class CloneSettingActivity extends AppCompatActivity {
 
-    @BindView(R.id.tvMediumClone)
-    TextView tvMediumClone;
     @BindView(R.id.etQxbytNum)
     EditText etQxbytNum;
+    @BindView(R.id.tvMediumClone)
+    TextView tvMediumClone;
     @BindView(R.id.etYxNum)
     EditText etYxNum;
     @BindView(R.id.etYlNum)
@@ -36,22 +35,12 @@ public class CloneSettingActivity extends AppCompatActivity {
     EditText etBfsNum;
     @BindView(R.id.etKjsbNum)
     EditText etKjsbNum;
-    @BindView(R.id.etTsNum)
-    EditText etTsNum;
-    @BindView(R.id.etChNum)
-    EditText etChNum;
-    @BindView(R.id.etBzrNum)
-    EditText etBzrNum;
-    @BindView(R.id.etNmjbNum)
-    EditText etNmjbNum;
-    @BindView(R.id.etLksNum)
-    EditText etLksNum;
-    @BindView(R.id.etXklNum)
-    EditText etXklNum;
     @BindView(R.id.etCloneLoss)
     EditText etCloneLoss;
     @BindView(R.id.etCloneLevel)
     EditText etCloneLevel;
+    @BindView(R.id.tvSuperClone)
+    TextView tvSuperClone;
     @BindView(R.id.spinnerAngel)
     Spinner spinnerAngel;
     @BindView(R.id.spinnerInsectQuene)
@@ -60,17 +49,10 @@ public class CloneSettingActivity extends AppCompatActivity {
     Spinner spinnerNano;
     @BindView(R.id.spinnerMutant)
     Spinner spinnerMutant;
-    @BindView(R.id.tvDragon)
-    TextView tvDragon;
     @BindView(R.id.spinnerDragon)
     Spinner spinnerDragon;
-    @BindView(R.id.tvSuperClone)
-    TextView tvSuperClone;
-    @BindView(R.id.save)
-    Button save;
     @BindView(R.id.spinnerLksjs)
     Spinner spinnerLksjs;
-
     private SharedPreferences preferences;
 
     @Override
@@ -96,15 +78,16 @@ public class CloneSettingActivity extends AppCompatActivity {
         etBfsNum.setText(preferences.getString("bfs", ""));
         etKjsbNum.setText(preferences.getString("kjsb", ""));
 
-        etTsNum.setText(preferences.getString("ts", ""));
-        etChNum.setText(preferences.getString("ch", ""));
-        etBzrNum.setText(preferences.getString("bzr", ""));
-        etNmjbNum.setText(preferences.getString("nmjb", ""));
-        etLksNum.setText(preferences.getString("lks", ""));
-        etXklNum.setText(preferences.getString("xkl", ""));
-
         etCloneLoss.setText(preferences.getString("loss", "0"));
         etCloneLevel.setText(preferences.getString("level", "0"));
+
+        spinnerAngel.setSelection(preferences.getInt("qh_ts",0));
+        spinnerInsectQuene.setSelection(preferences.getInt("qh_ch",0));
+        spinnerMutant.setSelection(preferences.getInt("qh_bzr",0));
+        spinnerNano.setSelection(preferences.getInt("qh_nmjb",0));
+        spinnerDragon.setSelection(preferences.getInt("qh_xkl",0));
+        spinnerLksjs.setSelection(preferences.getInt("qh_lks",0));
+
     }
 
     @OnClick({R.id.save})
@@ -126,23 +109,16 @@ public class CloneSettingActivity extends AppCompatActivity {
         editor.putString("cclz", etCclzNum.getText().toString());
         editor.putString("bfs", etBfsNum.getText().toString());
         editor.putString("kjsb", etKjsbNum.getText().toString());
-        //超级克隆体设置
-        editor.putString("ts", etTsNum.getText().toString());
-        editor.putString("ch", etChNum.getText().toString());
-        editor.putString("bzr", etBzrNum.getText().toString());
-        editor.putString("nmjb", etNmjbNum.getText().toString());
-        editor.putString("lks", etLksNum.getText().toString());
-        editor.putString("xkl", etXklNum.getText().toString());
         //克隆体战损及等级,默认为0
         editor.putString("loss", etCloneLoss.getText().toString());
         editor.putString("level", etCloneLevel.getText().toString());
         //克隆体强化
-        editor.putString("qh_ts", spinnerAngel.getSelectedItemPosition() + "");
-        editor.putString("qh_ch", spinnerInsectQuene.getSelectedItemPosition() + "");
-        editor.putString("qh_bzr", spinnerMutant.getSelectedItemPosition() + "");
-        editor.putString("qh_nmjb", spinnerNano.getSelectedItemPosition() + "");
-        editor.putString("qh_xkl", spinnerDragon.getSelectedItemPosition() + "");
-        editor.putString("qh_lks", spinnerLksjs.getSelectedItemPosition()+"");
+        editor.putInt("qh_ts", spinnerAngel.getSelectedItemPosition());
+        editor.putInt("qh_ch", spinnerInsectQuene.getSelectedItemPosition());
+        editor.putInt("qh_bzr", spinnerMutant.getSelectedItemPosition());
+        editor.putInt("qh_nmjb", spinnerNano.getSelectedItemPosition());
+        editor.putInt("qh_xkl", spinnerDragon.getSelectedItemPosition());
+        editor.putInt("qh_lks", spinnerLksjs.getSelectedItemPosition());
         editor.apply();
         Toast.makeText(CloneSettingActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
         finish();

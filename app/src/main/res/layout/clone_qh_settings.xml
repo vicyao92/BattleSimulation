@@ -20,93 +20,28 @@
         tools:context=".app.MainActivity">
 
         <TextView
-            android:id="@+id/tvCloneLoss"
+            android:id="@+id/tvSuperClone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/clone_loss"
+            android:text="@string/super_clone"
+            android:textColor="@color/label"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.082" />
-
-        <EditText
-            android:id="@+id/etCloneLoss"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:hint="0"
-            android:inputType="number"
-            android:maxLength="6"
-            android:text="@string/zero"
-            app:layout_constraintBottom_toBottomOf="@+id/tvCloneLoss"
-            app:layout_constraintStart_toEndOf="@+id/tvCloneLoss"
-            app:layout_constraintTop_toTopOf="@+id/tvCloneLoss"
-            app:layout_constraintVertical_bias="0.685" />
-
-        <TextView
-            android:id="@+id/tvCloneLevel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/clone_level"
-            app:layout_constraintBottom_toBottomOf="@+id/tvCloneLoss"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.559"
-            app:layout_constraintStart_toEndOf="@+id/tvCloneLoss"
-            app:layout_constraintTop_toTopOf="@+id/tvCloneLoss"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <EditText
-            android:id="@+id/etCloneLevel"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:hint="0"
-            android:inputType="number"
-            android:maxLength="1"
-            android:text="@string/zero"
-            app:layout_constraintBottom_toBottomOf="@+id/tvCloneLevel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.312"
-            app:layout_constraintStart_toEndOf="@+id/tvCloneLevel"
-            app:layout_constraintTop_toTopOf="@+id/tvCloneLevel"
-            app:layout_constraintVertical_bias="0.685" />
-
-        <TextView
-            android:id="@+id/tvPercent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/percent"
-            app:layout_constraintBottom_toBottomOf="@+id/tvCloneLoss"
-            app:layout_constraintStart_toEndOf="@+id/etCloneLoss"
-            app:layout_constraintTop_toTopOf="@+id/tvCloneLoss" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/tvTs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="24dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="@string/clone_angel"
-            app:layout_constraintStart_toStartOf="@+id/tvCloneLoss"
-            app:layout_constraintTop_toBottomOf="@+id/tvCloneLoss" />
+            app:layout_constraintEnd_toEndOf="@+id/tvSuperClone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSuperClone" />
 
         <Spinner
             android:id="@+id/spinnerAngel"

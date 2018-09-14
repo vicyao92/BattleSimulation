@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -23,7 +25,6 @@ import com.vic.battlesimulation.adapter.BarChartItem;
 import com.vic.battlesimulation.adapter.ChartDataAdapter;
 import com.vic.battlesimulation.adapter.ChartItem;
 import com.vic.battlesimulation.adapter.LineChartItem;
-import com.vic.battlesimulation.adapter.PieChartItem;
 import com.vic.battlesimulation.app.MyApplication;
 import com.vic.battlesimulation.bean.Enemy;
 import com.vic.battlesimulation.bean.MyAttribute;
@@ -32,10 +33,17 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ResultActivity extends AppCompatActivity {
 
+    @BindView(R.id.tvResult)
+    TextView tvResult;
+    @BindView(R.id.tvMyRemaining)
+    TextView tvMyRemaining;
+    @BindView(R.id.tvEnemyRemaining)
+    TextView tvEnemyRemaining;
     //超级克隆体特殊伤害及减免
     private long angel;
     private long insect;
@@ -58,15 +66,16 @@ public class ResultActivity extends AppCompatActivity {
     private double firstRoundEPj;
     private int mySpeed;
     private int enemySpeed;
-    double lowNum,mediumNum,superNum;
+    double lowNum, mediumNum, superNum;
     private List<Long> myCurrentPowerPerTurn;
     private List<Long> enemyCurrentPowerPerTurn;
     private static final int[] PIE_COLORS = {
-            Color.rgb(100,149,237), Color.rgb(	128,128,128),
+            Color.rgb(100, 149, 237), Color.rgb(128, 128, 128),
             Color.rgb(255, 208, 140)};
     private SharedPreferences preferences;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -74,7 +83,7 @@ public class ResultActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent intent;
         intent = getIntent();
-        preferences = getSharedPreferences(MyApplication.EXTRA_SETTING,0);
+        preferences = getSharedPreferences(MyApplication.EXTRA_SETTING, 0);
         myAttribute = intent.getParcelableExtra("MyAttribute");
         enemy = intent.getParcelableExtra("EnemyAttr");
         mySpeed = myAttribute.getMyAttribute().getSpeed();
@@ -90,6 +99,28 @@ public class ResultActivity extends AppCompatActivity {
         fight();
         cacCloneLoss();
         initialChart();
+        showDirectResult();
+    }
+
+    /**
+     * 直接在textview显示战斗结果
+     */
+    private void showDirectResult() {
+        if(myCurrentPowerPerTurn.get(myCurrentPowerPerTurn.size()-1)==0){
+            tvResult.setText("我方战败");
+            tvResult.setTextColor(Color.RED);
+            tvMyRemaining.setText("0");
+            tvMyRemaining.setTextColor(Color.RED);
+            tvEnemyRemaining.setTextColor(Color.BLUE);
+            tvEnemyRemaining.setText(enemyCurrentPowerPerTurn.get(enemyCurrentPowerPerTurn.size()-1)+"");
+        }else {
+            tvResult.setText("我方战胜");
+            tvResult.setTextColor(Color.BLUE);
+            tvMyRemaining.setText(myCurrentPowerPerTurn.get(myCurrentPowerPerTurn.size()-1)+"");
+            tvMyRemaining.setTextColor(Color.BLUE);
+            tvEnemyRemaining.setTextColor(Color.RED);
+            tvEnemyRemaining.setText("0");
+        }
     }
 
     /**
@@ -97,11 +128,11 @@ public class ResultActivity extends AppCompatActivity {
      */
     private void cacCloneLoss() {
         int loss = myAttribute.getCloneLoss();
-        double powerLossRate = (1-(double)myCurrentPowerPerTurn.get(myCurrentPowerPerTurn.size()-1)/(double)myCurrentPowerPerTurn.get(0));
-        double lossRate = 0.5/(1+((double)loss/100))*(powerLossRate);
-        lowNum =Math.ceil((double)myAttribute.getLowCloneNum() * lossRate);
+        double powerLossRate = (1 - (double) myCurrentPowerPerTurn.get(myCurrentPowerPerTurn.size() - 1) / (double) myCurrentPowerPerTurn.get(0));
+        double lossRate = 0.5 / (1 + ((double) loss / 100)) * (powerLossRate);
+        lowNum = Math.ceil((double) myAttribute.getLowCloneNum() * lossRate);
         mediumNum = Math.ceil(myAttribute.getMediumCloneNum() * lossRate);
-        superNum =(int)(myAttribute.getSuperCloneNum() * lossRate);
+        superNum = (int) (myAttribute.getSuperCloneNum() * lossRate);
     }
 
     /**
@@ -114,17 +145,16 @@ public class ResultActivity extends AppCompatActivity {
 
         for (int i = 0; i < 1; i++) {
             list.add(new LineChartItem(generateDataLine(), getApplicationContext()));
-            list.add(new PieChartItem(generateDataPie(), getApplicationContext()));
-            list.add(new BarChartItem(generateDataBar(),getApplicationContext()));
-    }
+            //list.add(new PieChartItem(generateDataPie(), getApplicationContext()));
+            list.add(new BarChartItem(generateDataBar(), getApplicationContext()));
+        }
 
         ChartDataAdapter cda = new ChartDataAdapter(getApplicationContext(), list);
         lv.setAdapter(cda);
     }
 
     /**
-     * @return
-     * 生成克隆体战损饼图
+     * @return 生成克隆体战损饼图
      */
     private PieData generateDataPie() {
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
@@ -142,14 +172,13 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     /**
-     * @return
-     * 初始化线型图数据
+     * @return 初始化线型图数据
      */
     private LineData generateDataLine() {
 
         ArrayList<Entry> e1 = new ArrayList<Entry>();
         for (int i = 0; i < myCurrentPowerPerTurn.size(); i++) {
-            e1.add(new Entry(i,(float)myCurrentPowerPerTurn.get(i)/(float) myAttribute.getMyAttribute().getPower()*100,
+            e1.add(new Entry(i, (float) myCurrentPowerPerTurn.get(i) / (float) myAttribute.getMyAttribute().getPower() * 100,
                     myCurrentPowerPerTurn.get(i)));
         }
 
@@ -164,7 +193,7 @@ public class ResultActivity extends AppCompatActivity {
         ArrayList<Entry> e2 = new ArrayList<Entry>();
 
         for (int i = 0; i < enemyCurrentPowerPerTurn.size(); i++) {
-            e2.add(new Entry(i,(float)enemyCurrentPowerPerTurn.get(i)/(float)enemy.getEnemyAttribute().getPower()*100,enemyCurrentPowerPerTurn.get(i)));
+            e2.add(new Entry(i, (float) enemyCurrentPowerPerTurn.get(i) / (float) enemy.getEnemyAttribute().getPower() * 100, enemyCurrentPowerPerTurn.get(i)));
         }
         LineDataSet d2 = new LineDataSet(e2, "回合结束敌方剩余战力");
         d2.setLineWidth(3f);
@@ -186,8 +215,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     /**
-     * @return
-     * 初始化条状图
+     * @return 初始化条状图
      */
     private BarData generateDataBar() {
 
@@ -206,10 +234,10 @@ public class ResultActivity extends AppCompatActivity {
         return cd;
     }
 
-      /**
+    /**
      * 初始化战斗相关的一些系数
      */
-    private void initialBasicAttributes(){
+    private void initialBasicAttributes() {
         double temp;
         long myFire;
         long myLuck;
@@ -332,39 +360,44 @@ public class ResultActivity extends AppCompatActivity {
      */
     private void initialCloneDamge() {
         long lks;
-        int cloneLevel = Integer.valueOf(preferences.getString("level","0"));
-        //超级克隆体数量
-        int tsNuM = Integer.valueOf(preferences.getString("ts","0"));
-        int nmjbNum = Integer.valueOf(preferences.getString("nmjb","0"));
-        int chNum = Integer.valueOf(preferences.getString("ch","0"));
-        int bzrNum = Integer.valueOf(preferences.getString("bzr","0"));
-        int xklNum = Integer.valueOf(preferences.getString("xkl","0"));
-        int lksNum = Integer.valueOf(preferences.getString("lks","0"));
-        //超级克隆体强化状态
-        int qhTs = Integer.valueOf(preferences.getString("qh_ts","0"));
-        int qhCh = Integer.valueOf(preferences.getString("qh_ch","0"));
-        int qhBzr = Integer.valueOf(preferences.getString("qh_bzr","0"));
-        int qhNmjb = Integer.valueOf(preferences.getString("qh_nmjb","0"));
-        int qhXkl = Integer.valueOf(preferences.getString("qh_xkl","0"));
-        int qhLks = Integer.valueOf(preferences.getString("qh_lks","0"));
-        //高级克隆体数量
-        int qxbytNum = Integer.valueOf(preferences.getString("qxbyt","0"));
-        int yxNum = Integer.valueOf(preferences.getString("yx","0"));
-        int ylNum = Integer.valueOf(preferences.getString("yl","0"));
-        int cclzNum = Integer.valueOf(preferences.getString("cclz","0"));
-        int bfsNum = Integer.valueOf(preferences.getString("bfs","0"));
-        int kjsbNum = Integer.valueOf(preferences.getString("kjsb","0"));
-        angel = tsNuM == 0 ? 0 : 24000 * cloneLevel *tsNuM + 30000 * qhTs;
-        nano = nmjbNum == 0 ? 0 : 16000 * cloneLevel *nmjbNum + 20000 * qhNmjb;
-        mutant = bzrNum == 0 ? 0 : (long) (0.0048 * myAttribute.getMyAttribute().getPower() * cloneLevel);
-        dragon = xklNum == 0 ? 0 : 5 * cloneLevel* xklNum + 25 * qhXkl;
-        insect = 0;
-        lks = qhLks == 0 ? 6000 * lksNum * cloneLevel: 6000 * lksNum * cloneLevel + 21000;
+        int cloneLevel = Integer.valueOf(preferences.getString("level", "0"));
 
-        cloneZeng = 1000 * cloneLevel *( yxNum + kjsbNum +tsNuM + bzrNum ) + 1000 * bzrNum;
+        //超级克隆体强化状态
+        int qhTs = preferences.getInt("qh_ts", 0);
+        int qhCh = preferences.getInt("qh_ch", 0);
+        int qhBzr = preferences.getInt("qh_bzr", 0);
+        int qhNmjb = preferences.getInt("qh_nmjb", 0);
+        int qhXkl = preferences.getInt("qh_xkl", 0);
+        int qhLks = preferences.getInt("qh_lks", 0);
+        //超级克隆体数量
+        int tsNuM = qhTs==0?0:1;
+        int nmjbNum = qhNmjb==0?0:1;
+        int chNum = qhCh==0?0:1;
+        int bzrNum = qhBzr==0?0:1;
+        int xklNum = qhXkl==0?0:1;
+        int lksNum = qhLks==0?0:1;
+        //高级克隆体数量
+        int qxbytNum = Integer.valueOf(preferences.getString("qxbyt", "0"));
+        int yxNum = Integer.valueOf(preferences.getString("yx", "0"));
+        int ylNum = Integer.valueOf(preferences.getString("yl", "0"));
+        int cclzNum = Integer.valueOf(preferences.getString("cclz", "0"));
+        int bfsNum = Integer.valueOf(preferences.getString("bfs", "0"));
+        int kjsbNum = Integer.valueOf(preferences.getString("kjsb", "0"));
+
+        angel = tsNuM == 0 ? 0 : 24000 * cloneLevel * tsNuM + 30000 * qhTs;
+        nano = nmjbNum == 0 ? 0 : 16000 * cloneLevel * nmjbNum + 20000 * qhNmjb;
+        mutant = bzrNum == 0 ? 0 : (long) (0.0048 * myAttribute.getMyAttribute().getPower() * cloneLevel);
+        dragon = xklNum == 0 ? 0 : 5 * cloneLevel * xklNum + 25 * qhXkl;
+        insect = 0;
+        lks = qhLks == 0 ? 6000 * lksNum * cloneLevel : 6000 * lksNum * cloneLevel + 21000;
+
+        cloneZeng = 1000 * cloneLevel * (yxNum + kjsbNum + tsNuM + bzrNum) + 1000 * bzrNum;
         cloneReduction = lks + 1000 * cloneLevel * (qxbytNum + cclzNum + lksNum);
-        cloneBao = 1200 * xklNum * cloneLevel + 2400 * chNum + 1200 * (cloneLevel -1) * chNum;
-        cloneReflection = 1000 * cloneLevel * (bfsNum + ylNum + nmjbNum) + 1000 * nmjbNum ;
+        cloneBao = 1200 * xklNum * cloneLevel + 2400 * chNum + 1200 * (cloneLevel - 1) * chNum;
+        cloneReflection = 1000 * cloneLevel * (bfsNum + ylNum + nmjbNum) + 1000 * nmjbNum;
+        if (preferences.getInt("hunter",0)!=0){
+            cloneZeng += 1000;
+        }
     }
 
     /**
@@ -410,8 +443,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     /**
-     * @param round
-     * 我方机动大于等于对方机动,我方先手
+     * @param round 我方机动大于等于对方机动,我方先手
      */
     private void myTurnFirst(int round) {
         if (!isDone) {
@@ -423,8 +455,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     /**
-     * @param round
-     * 我方机动小于敌方机动,我方后手
+     * @param round 我方机动小于敌方机动,我方后手
      */
     private void enemyTurnFirst(int round) {
         if (!isDone) {
@@ -436,8 +467,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     /**
-     * @param round
-     * 根据回合数增加或者减免特殊伤害
+     * @param round 根据回合数增加或者减免特殊伤害
      */
     private void manageSpecialDamage(int round) {
         switch (round) {
@@ -446,7 +476,7 @@ public class ResultActivity extends AppCompatActivity {
                 enemyDamage = enemyDamage - nano;
                 break;
             case 2:
-                if (myAttribute.getCloneInsect() != 0) {
+                if (preferences.getInt("qh_ch", 0) != 0) {
                     insect = myAttribute.getMyAttribute().getCurrentPower() < 1000000 ? 8400 * myAttribute.getCloneLevel() :
                             (long) (myCurrentPower * 0.0084 * myAttribute.getCloneLevel());
                 } else {

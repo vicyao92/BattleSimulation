@@ -27,7 +27,7 @@ public class ChartDataAdapter extends ArrayAdapter<ChartItem> {
 
     @Override
     public int getViewTypeCount() {
-        return 3; // we have 3 different item-types
+        return 2; // we have 3 different item-types
     }
 
 }

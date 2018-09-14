@@ -254,7 +254,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
-
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="89dp"
@@ -275,22 +274,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
                         android:text="@string/clone_num"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.113" />
+                        app:layout_constraintVertical_bias="0.046" />
 
                     <EditText
                         android:id="@+id/etSuperClone"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="9dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
                         android:gravity="center"
                         android:hint="0"
                         android:inputType="number"
@@ -304,8 +299,11 @@
                         android:id="@+id/tvSuperClone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
                         android:text="@string/clone_super"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/tvCloneNum"
                         app:layout_constraintStart_toStartOf="@+id/tvCloneNum"
                         app:layout_constraintTop_toBottomOf="@+id/tvCloneNum" />
 
@@ -313,11 +311,12 @@
                         android:id="@+id/tvLowClone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:text="@string/clone_low"
                         app:layout_constraintBottom_toBottomOf="@+id/tvSuperClone"
                         app:layout_constraintEnd_toStartOf="@+id/etLowClone"
+                        app:layout_constraintStart_toEndOf="@+id/etMediumClone"
                         app:layout_constraintTop_toTopOf="@+id/tvSuperClone" />
 
                     <EditText
@@ -339,30 +338,28 @@
                         android:id="@+id/tvMediumClone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="32dp"
-                        android:layout_marginStart="32dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginStart="24dp"
                         android:text="@string/clone_medium"
                         app:layout_constraintBottom_toBottomOf="@+id/tvSuperClone"
                         app:layout_constraintStart_toEndOf="@+id/etSuperClone"
-                        app:layout_constraintTop_toTopOf="@+id/tvSuperClone" />
+                        app:layout_constraintTop_toTopOf="@+id/tvSuperClone"
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <EditText
                         android:id="@+id/etMediumClone"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
                         android:gravity="center"
                         android:hint="0"
                         android:inputType="number"
                         android:maxLength="3"
                         android:text="@string/zero"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvSuperClone"
-                        app:layout_constraintEnd_toStartOf="@+id/tvSuperClone"
-                        app:layout_constraintStart_toEndOf="@+id/tvSuperClone"
-                        app:layout_constraintTop_toTopOf="@+id/tvSuperClone" />
+                        app:layout_constraintBottom_toBottomOf="@+id/tvMediumClone"
+                        app:layout_constraintStart_toEndOf="@+id/tvMediumClone"
+                        app:layout_constraintTop_toTopOf="@+id/tvMediumClone" />
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
@@ -419,8 +416,68 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
-            <include layout="@layout/clone"/>
-            <include layout="@layout/target"/>
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:elevation="10dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardUseCompatPadding="true">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:context=".app.MainActivity">
+
+                    <TextView
+                        android:id="@+id/tvTarget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/target"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.029"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <Button
+                        android:id="@+id/btnTarget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/select_target"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvTarget"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tvTarget"
+                        app:layout_constraintTop_toTopOf="@+id/tvTarget" />
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v7.widget.CardView>
+            <Button
+                android:id="@+id/btnSimulation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:text="@string/simulation" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

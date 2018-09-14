@@ -6,7 +6,7 @@
     <color name="colorBg">#fff761</color>
     <color name="add">#559fca</color>
     <color name="delete">#f0983c</color>
-    <color name="g">#5abb8b</color>
+    <color name="robot">#5abb8b</color>
     <color name="purple">#a67fc0</color>
     <color name="load">#d75f45</color>
     <color name="color_text">#444444</color>
@@ -15,4 +15,5 @@
     <color name="red_normal">#FF0000</color>
     <color name="red_pressed">#FF6666</color>
     <color name="label">#9c9c9c</color>
+    <color name="light_grey">#c7c7c7</color>
 </resources>

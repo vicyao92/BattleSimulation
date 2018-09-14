@@ -32,7 +32,7 @@ public class PieChartItem extends ChartItem {
 
     @Override
     public int getItemType() {
-        return TYPE_PIECHART;
+        return 0;
     }
 
     @Override
