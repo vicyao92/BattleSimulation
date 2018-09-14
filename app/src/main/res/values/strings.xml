@@ -27,6 +27,25 @@
     <string name="clone_medium">中级</string>
     <string name="clone_low">初级</string>
     <string name="zero">0</string>
+    <string name="number">数量</string>
+    <string name="level">等级</string>
+    <string name="low_clone">低级克隆体</string>
+    <string name="medium_clone">高级克隆体</string>
+    <string name="super_clone">超级克隆体</string>
+    <string name="l_qxbyt">缺陷变异体C型</string>
+    <string name="l_yx">异型</string>
+    <string name="l_yl">翼龙</string>
+    <string name="l_cclz">巢虫领主</string>
+    <string name="l_kjsb">奎甲士兵</string>
+    <string name="l_bfs">暴风兽</string>
+    <string name="s_ts">天使</string>
+    <string name="s_ch">虫后</string>
+    <string name="s_bzr">变种人</string>
+    <string name="s_nmjb">纳米尖兵</string>
+    <string name="s_lks">兰克兽</string>
+    <string name="s_xkl">虚空龙</string>
+    <string name="save">保存</string>
+    <string name="lksjs">兰克兽减损</string>
     <string-array name="faction">
         <item>奥鲁维之刃</item>
         <item>卡纳斯的启示</item>
@@ -34,7 +53,6 @@
         <item>深渊的咆哮</item>
     </string-array>
     <string-array name="clone">
-        <item>无</item>
         <item>未强化</item>
         <item>已强化</item>
     </string-array>

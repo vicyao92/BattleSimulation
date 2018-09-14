@@ -40,4 +40,5 @@ dependencies {
     implementation 'com.tiancaicc.springfloatingactionmenu:library:0.0.2'
     implementation 'org.litepal.android:core:2.0.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
 }

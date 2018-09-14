@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
+    android:elevation="10dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".app.MainActivity">
+
+        <TextView
+            android:id="@+id/tvSuperClone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/super_clone"
+            android:textColor="@color/label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tvTs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/s_ts"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvSuperClone"
+            app:layout_constraintStart_toStartOf="@+id/tvSuperClone"
+            app:layout_constraintTop_toBottomOf="@+id/tvSuperClone"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/etTsNum"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTs"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.76"
+            app:layout_constraintStart_toEndOf="@+id/tvTs"
+            app:layout_constraintTop_toTopOf="@+id/tvTs" />
+
+        <TextView
+            android:id="@+id/tvCh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/s_ch"
+            app:layout_constraintEnd_toEndOf="@+id/tvTs"
+            app:layout_constraintStart_toStartOf="@+id/tvTs"
+            app:layout_constraintTop_toBottomOf="@+id/tvTs" />
+
+        <EditText
+            android:id="@+id/etChNum"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCh"
+            app:layout_constraintEnd_toEndOf="@+id/etTsNum"
+            app:layout_constraintStart_toStartOf="@+id/etTsNum"
+            app:layout_constraintTop_toTopOf="@+id/tvCh" />
+
+        <TextView
+            android:id="@+id/tvBzr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/s_bzr"
+            app:layout_constraintEnd_toEndOf="@+id/tvCh"
+            app:layout_constraintStart_toStartOf="@+id/tvCh"
+            app:layout_constraintTop_toBottomOf="@+id/tvCh" />
+
+        <EditText
+            android:id="@+id/etBzrNum"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            app:layout_constraintBottom_toBottomOf="@+id/tvBzr"
+            app:layout_constraintEnd_toEndOf="@+id/etChNum"
+            app:layout_constraintStart_toStartOf="@+id/etChNum"
+            app:layout_constraintTop_toTopOf="@+id/tvBzr" />
+
+        <TextView
+            android:id="@+id/tvNmjb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/s_nmjb"
+            app:layout_constraintEnd_toEndOf="@+id/tvBzr"
+            app:layout_constraintStart_toStartOf="@+id/tvBzr"
+            app:layout_constraintTop_toBottomOf="@+id/tvBzr" />
+
+        <EditText
+            android:id="@+id/etNmjbNum"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            app:layout_constraintBottom_toBottomOf="@+id/tvNmjb"
+            app:layout_constraintEnd_toEndOf="@+id/etBzrNum"
+            app:layout_constraintStart_toStartOf="@+id/etBzrNum"
+            app:layout_constraintTop_toTopOf="@+id/tvNmjb" />
+
+        <TextView
+            android:id="@+id/tvLks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/s_lks"
+            app:layout_constraintEnd_toEndOf="@+id/tvNmjb"
+            app:layout_constraintStart_toStartOf="@+id/tvNmjb"
+            app:layout_constraintTop_toBottomOf="@+id/tvNmjb" />
+
+        <EditText
+            android:id="@+id/etLksNum"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            app:layout_constraintBottom_toBottomOf="@+id/tvLks"
+            app:layout_constraintEnd_toEndOf="@+id/etNmjbNum"
+            app:layout_constraintStart_toStartOf="@+id/etNmjbNum"
+            app:layout_constraintTop_toTopOf="@+id/tvLks" />
+
+        <TextView
+            android:id="@+id/tvXkl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/s_xkl"
+            app:layout_constraintEnd_toEndOf="@+id/tvLks"
+            app:layout_constraintStart_toStartOf="@+id/tvLks"
+            app:layout_constraintTop_toBottomOf="@+id/tvLks" />
+
+        <EditText
+            android:id="@+id/etXklNum"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            app:layout_constraintBottom_toBottomOf="@+id/tvXkl"
+            app:layout_constraintEnd_toEndOf="@+id/etLksNum"
+            app:layout_constraintStart_toStartOf="@+id/etLksNum"
+            app:layout_constraintTop_toTopOf="@+id/tvXkl" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

@@ -7,7 +7,7 @@ import org.litepal.LitePal;
 
 public class MyApplication extends Application {
     private static Context mContext;
-
+    public static final String EXTRA_SETTING = "extra_settings";
     @Override
     public void onCreate() {
         super.onCreate();

@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ResultActivity" />
-        <activity android:name=".activity.ManageSettingActivity"></activity>
+        <activity android:name=".activity.ManageSettingActivity" />
+        <activity android:name=".activity.CloneSettingActivity"></activity>
     </application>
 
 </manifest>

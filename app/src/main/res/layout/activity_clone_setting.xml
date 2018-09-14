@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.CloneSettingActivity">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_weight="1"
+                    android:text="@string/number"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <android.support.v7.widget.CardView
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardUseCompatPadding="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:elevation="10dp"
+                app:cardCornerRadius="8dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:context=".app.MainActivity">
+
+                    <EditText
+                        android:id="@+id/etQxbytNum"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvQxbyt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.7"
+                        app:layout_constraintStart_toEndOf="@+id/tvQxbyt"
+                        app:layout_constraintTop_toTopOf="@+id/tvQxbyt" />
+
+                    <TextView
+                        android:id="@+id/tvMediumClone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/medium_clone"
+                        android:textColor="@color/label"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/tvQxbyt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/l_qxbyt"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvMediumClone"
+                        app:layout_constraintVertical_bias="0.009" />
+
+                    <TextView
+                        android:id="@+id/tvYx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/l_yx"
+                        app:layout_constraintEnd_toEndOf="@+id/tvQxbyt"
+                        app:layout_constraintStart_toStartOf="@+id/tvQxbyt"
+                        app:layout_constraintTop_toBottomOf="@+id/tvQxbyt" />
+
+                    <EditText
+                        android:id="@+id/etYxNum"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvYx"
+                        app:layout_constraintEnd_toEndOf="@+id/etQxbytNum"
+                        app:layout_constraintStart_toStartOf="@+id/etQxbytNum"
+                        app:layout_constraintTop_toTopOf="@+id/tvYx" />
+
+                    <TextView
+                        android:id="@+id/tvYl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/l_yl"
+                        app:layout_constraintEnd_toEndOf="@+id/tvQxbyt"
+                        app:layout_constraintStart_toStartOf="@+id/tvQxbyt"
+                        app:layout_constraintTop_toBottomOf="@+id/tvYx" />
+
+                    <EditText
+                        android:id="@+id/etYlNum"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvYl"
+                        app:layout_constraintEnd_toEndOf="@+id/etYxNum"
+                        app:layout_constraintStart_toStartOf="@+id/etYxNum"
+                        app:layout_constraintTop_toTopOf="@+id/tvYl" />
+
+                    <TextView
+                        android:id="@+id/tvCclz"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/l_cclz"
+                        app:layout_constraintEnd_toEndOf="@+id/tvQxbyt"
+                        app:layout_constraintStart_toStartOf="@+id/tvQxbyt"
+                        app:layout_constraintTop_toBottomOf="@+id/tvYl" />
+
+                    <EditText
+                        android:id="@+id/etCclzNum"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvCclz"
+                        app:layout_constraintEnd_toEndOf="@+id/etYlNum"
+                        app:layout_constraintStart_toStartOf="@+id/etYlNum"
+                        app:layout_constraintTop_toTopOf="@+id/tvCclz" />
+
+                    <TextView
+                        android:id="@+id/tvBfs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/l_bfs"
+                        app:layout_constraintEnd_toEndOf="@+id/tvQxbyt"
+                        app:layout_constraintStart_toStartOf="@+id/tvQxbyt"
+                        app:layout_constraintTop_toBottomOf="@+id/tvCclz" />
+
+                    <EditText
+                        android:id="@+id/etBfsNum"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvBfs"
+                        app:layout_constraintEnd_toEndOf="@+id/etCclzNum"
+                        app:layout_constraintStart_toStartOf="@+id/etCclzNum"
+                        app:layout_constraintTop_toTopOf="@+id/tvBfs" />
+
+                    <TextView
+                        android:id="@+id/tvKjsb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/l_kjsb"
+                        app:layout_constraintEnd_toEndOf="@+id/tvQxbyt"
+                        app:layout_constraintStart_toStartOf="@+id/tvQxbyt"
+                        app:layout_constraintTop_toBottomOf="@+id/tvBfs" />
+
+                    <EditText
+                        android:id="@+id/etKjsbNum"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:ems="0"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvKjsb"
+                        app:layout_constraintEnd_toEndOf="@+id/etBfsNum"
+                        app:layout_constraintStart_toStartOf="@+id/etBfsNum"
+                        app:layout_constraintTop_toTopOf="@+id/tvKjsb" />
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v7.widget.CardView>
+            <include layout="@layout/super_clone_settings"/>
+            <include layout="@layout/clone_qh_settings"/>
+            <Button
+                android:id="@+id/save"
+                android:text="@string/save"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.constraint.ConstraintLayout>

@@ -331,9 +331,9 @@
                         android:inputType="number"
                         android:maxLength="3"
                         android:text="@string/zero"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvLowClone"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvSuperClone"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tvLowClone" />
+                        app:layout_constraintTop_toTopOf="@+id/tvSuperClone" />
 
                     <TextView
                         android:id="@+id/tvMediumClone"
@@ -359,10 +359,10 @@
                         android:inputType="number"
                         android:maxLength="3"
                         android:text="@string/zero"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvMediumClone"
-                        app:layout_constraintEnd_toStartOf="@+id/tvLowClone"
-                        app:layout_constraintStart_toEndOf="@+id/tvMediumClone"
-                        app:layout_constraintTop_toTopOf="@+id/tvMediumClone" />
+                        app:layout_constraintBottom_toBottomOf="@+id/tvSuperClone"
+                        app:layout_constraintEnd_toStartOf="@+id/tvSuperClone"
+                        app:layout_constraintStart_toEndOf="@+id/tvSuperClone"
+                        app:layout_constraintTop_toTopOf="@+id/tvSuperClone" />
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
