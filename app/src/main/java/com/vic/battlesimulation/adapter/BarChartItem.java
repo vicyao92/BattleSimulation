@@ -52,13 +52,15 @@ public class BarChartItem extends ChartItem {
         holder.chart.setDrawGridBackground(false);
         holder.chart.setDrawBarShadow(false);
         holder.chart.setTouchEnabled(false);
+        holder.chart.setScaleEnabled(false);
 
-/*        XAxis xAxis = holder.chart.getXAxis();
+        XAxis xAxis = holder.chart.getXAxis();
         xAxis.setPosition(XAxisPosition.BOTTOM);
         xAxis.setTypeface(mTf);
         xAxis.setDrawGridLines(false);
-        xAxis.setDrawAxisLine(true);*/
-        
+        xAxis.setDrawAxisLine(false);
+        xAxis.setEnabled(false);
+
         YAxis leftAxis = holder.chart.getAxisLeft();
         leftAxis.setTypeface(mTf);
         leftAxis.setLabelCount(5, false);

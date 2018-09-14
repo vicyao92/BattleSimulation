@@ -7,16 +7,12 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +25,7 @@ import com.tiancaicc.springfloatingactionmenu.OnMenuActionListener;
 import com.tiancaicc.springfloatingactionmenu.SpringFloatingActionMenu;
 import com.vic.battlesimulation.R;
 import com.vic.battlesimulation.Utils.TextUtils;
+import com.vic.battlesimulation.activity.CloneSettingActivity;
 import com.vic.battlesimulation.activity.ManageSettingActivity;
 import com.vic.battlesimulation.activity.ResultActivity;
 import com.vic.battlesimulation.bean.BasicAttribute;
@@ -147,9 +144,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .addMenuItem(R.color.add, R.drawable.save24, "保存配置", R.color.white,this)
                 .addMenuItem(R.color.load, R.drawable.load24, "读取配置", R.color.white,this)
                 .addMenuItem(R.color.delete, R.drawable.manage24, "管理配置", R.color.white,this)
+                .addMenuItem(R.color.purple, R.drawable.clone, "克隆体配置", R.color.white,this)
                 //you can choose menu layout animation
                 //设置动画类型
-                .animationType(SpringFloatingActionMenu.ANIMATION_TYPE_BLOOM)
+                .animationType(SpringFloatingActionMenu.ANIMATION_TYPE_TUMBLR)
                 //设置reveal效果的颜色
                 .revealColor(R.color.color_text)
                 //设置FAB的位置,只支持底部居中和右下角的位置
@@ -381,6 +379,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(MainActivity.this, ManageSettingActivity.class);
                 startActivity(intent);
                 break;
+            case "克隆体配置":
+                springFloatingActionMenu.hideMenu();
+                Intent i = new Intent(MainActivity.this, CloneSettingActivity.class);
+                startActivity(i);
+                break;
         }
     }
 
@@ -489,6 +492,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         database.insertOrThrow(MY_TABLE, null, cv);
         database.setTransactionSuccessful();
         database.endTransaction();
+        database.close();
     }
 
     private static class MyHandler extends Handler {
