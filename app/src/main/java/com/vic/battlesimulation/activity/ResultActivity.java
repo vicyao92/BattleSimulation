@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -73,7 +74,7 @@ public class ResultActivity extends AppCompatActivity {
             Color.rgb(100, 149, 237), Color.rgb(128, 128, 128),
             Color.rgb(255, 208, 140)};
     private SharedPreferences preferences;
-
+    private int cloneLevel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -360,8 +361,7 @@ public class ResultActivity extends AppCompatActivity {
      */
     private void initialCloneDamge() {
         long lks;
-        int cloneLevel = Integer.valueOf(preferences.getString("level", "0"));
-
+        cloneLevel = Integer.valueOf(preferences.getString("level", "0"));
         //超级克隆体强化状态
         int qhTs = preferences.getInt("qh_ts", 0);
         int qhCh = preferences.getInt("qh_ch", 0);
@@ -384,20 +384,42 @@ public class ResultActivity extends AppCompatActivity {
         int bfsNum = Integer.valueOf(preferences.getString("bfs", "0"));
         int kjsbNum = Integer.valueOf(preferences.getString("kjsb", "0"));
 
-        angel = tsNuM == 0 ? 0 : 24000 * cloneLevel * tsNuM + 30000 * qhTs;
-        nano = nmjbNum == 0 ? 0 : 16000 * cloneLevel * nmjbNum + 20000 * qhNmjb;
-        mutant = bzrNum == 0 ? 0 : (long) (0.0048 * myAttribute.getMyAttribute().getPower() * cloneLevel);
-        dragon = xklNum == 0 ? 0 : 5 * cloneLevel * xklNum + 25 * qhXkl;
+        angel = qhTs == 0 ? 0 : 24000 * cloneLevel + 30000 * (qhTs -1);
+        nano = qhNmjb == 0 ? 0 : 16000 * cloneLevel * nmjbNum + 20000 * (qhNmjb-1);
+        if (qhBzr == 0){
+            mutant = 0;
+        }else {
+            mutant = qhBzr == 1 ? (long) (0.004 * myAttribute.getMyAttribute().getPower() * cloneLevel) :
+                    (long) (0.0048 * myAttribute.getMyAttribute().getPower() * cloneLevel);
+        }
+        dragon = qhXkl == 0 ? 0 : 5 * cloneLevel * xklNum + 25 *(qhXkl - 1);
         insect = 0;
-        lks = qhLks == 0 ? 6000 * lksNum * cloneLevel : 6000 * lksNum * cloneLevel + 21000;
+        lks = qhLks == 0 ? 0: 6000 * lksNum * cloneLevel + 21000 * (qhLks -1);
 
-        cloneZeng = 1000 * cloneLevel * (yxNum + kjsbNum + tsNuM + bzrNum) + 1000 * bzrNum;
+        cloneZeng = 1000 * cloneLevel * (yxNum + kjsbNum + tsNuM + bzrNum);
         cloneReduction = lks + 1000 * cloneLevel * (qxbytNum + cclzNum + lksNum);
-        cloneBao = 1200 * xklNum * cloneLevel + 2400 * chNum + 1200 * (cloneLevel - 1) * chNum;
-        cloneReflection = 1000 * cloneLevel * (bfsNum + ylNum + nmjbNum) + 1000 * nmjbNum;
+        cloneBao = 1200 * cloneLevel * ( chNum + xklNum );
+        cloneReflection = 1000 * cloneLevel * (bfsNum + ylNum + nmjbNum);
+        if (qhTs == 2){cloneZeng += 1000;}
+        if (qhBzr == 2){cloneZeng += 1000;}
+        if (qhLks == 2){cloneReduction += 1000;}
+        if (qhNmjb == 2){cloneReflection += 1000;}
+        if (qhCh == 2){cloneBao += 1200;}
+        if (qhXkl == 2){cloneBao += 1200;}
         if (preferences.getInt("hunter",0)!=0){
             cloneZeng += 1000;
         }
+/*
+        Log.d("AtrrDebug","angel:"+angel);
+        Log.d("AtrrDebug","nano:"+nano);
+        Log.d("AtrrDebug","mutant:"+mutant);
+        Log.d("AtrrDebug","dragon:"+dragon);
+        Log.d("AtrrDebug","lks:"+lks);
+
+        Log.d("AtrrDebug","增:"+cloneZeng);
+        Log.d("AtrrDebug","减:"+cloneReduction);
+        Log.d("AtrrDebug","暴:"+cloneBao);
+        Log.d("AtrrDebug","反:"+cloneReflection);*/
     }
 
     /**
@@ -476,11 +498,20 @@ public class ResultActivity extends AppCompatActivity {
                 enemyDamage = enemyDamage - nano;
                 break;
             case 2:
-                if (preferences.getInt("qh_ch", 0) != 0) {
-                    insect = myAttribute.getMyAttribute().getCurrentPower() < 1000000 ? 8400 * myAttribute.getCloneLevel() :
-                            (long) (myCurrentPower * 0.0084 * myAttribute.getCloneLevel());
-                } else {
-                    insect = 0;
+                switch (preferences.getInt("qh_ch", 0)) {
+                    case 2:
+                        insect = myAttribute.getMyAttribute().getCurrentPower() < 1000000 ? 8400 *
+                                cloneLevel : (long) (myCurrentPower * 0.0084 * cloneLevel);
+                        Log.d("AtrrDebug","insect:"+insect);
+                        break;
+                    case 0:
+                        insect = 0;
+                        break;
+                    case 1:
+                        insect = myAttribute.getMyAttribute().getCurrentPower() < 1000000 ? 7000 *
+                                cloneLevel : (long) (myCurrentPower * 0.007 * cloneLevel);
+                        Log.d("AtrrDebug","insect:"+insect);
+                        break;
                 }
                 myDamage = myDamage + insect;
                 break;
@@ -490,5 +521,11 @@ public class ResultActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
     }
 }

@@ -55,7 +55,7 @@
 
     <Spinner
         android:id="@+id/spinnerEdenGuard"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginEnd="8dp"
@@ -71,8 +71,8 @@
 
     <Spinner
         android:id="@+id/spinnerEdenHunter"
-        android:layout_width="70dp"
-        android:layout_height="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -87,8 +87,8 @@
 
     <Spinner
         android:id="@+id/spinnerHaty"
-        android:layout_width="70dp"
-        android:layout_height="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="3"
         android:entries="@array/robot"

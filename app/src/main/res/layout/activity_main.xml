@@ -82,10 +82,8 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:hint="@string/zero"
                         android:inputType="number"
                         android:maxLength="8"
-                        android:text="@string/zero"
                         app:layout_constraintBottom_toBottomOf="@+id/tvPower"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/tvPower"
@@ -180,10 +178,9 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:hint="0"
                         android:inputType="number"
                         android:maxLength="4"
-                        android:text="@string/zero"
+
                         app:layout_constraintBottom_toBottomOf="@+id/tvFire"
                         app:layout_constraintEnd_toStartOf="@+id/tvDefence"
                         app:layout_constraintHorizontal_bias="0.191"
@@ -200,10 +197,9 @@
                         android:layout_marginRight="8dp"
                         android:layout_marginStart="28dp"
                         android:gravity="center"
-                        android:hint="0"
                         android:inputType="number"
                         android:maxLength="4"
-                        android:text="@string/zero"
+
                         app:layout_constraintBottom_toBottomOf="@+id/tvDefence"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/tvDefence"
@@ -218,10 +214,8 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:hint="0"
                         android:inputType="number"
                         android:maxLength="4"
-                        android:text="@string/zero"
                         app:layout_constraintBottom_toBottomOf="@+id/tvSpeed"
                         app:layout_constraintEnd_toEndOf="@+id/etFire"
                         app:layout_constraintHorizontal_bias="0.888"
@@ -239,10 +233,8 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:hint="0"
                         android:inputType="number"
                         android:maxLength="4"
-                        android:text="@string/zero"
                         app:layout_constraintBottom_toBottomOf="@+id/tvLuck"
                         app:layout_constraintEnd_toEndOf="@+id/etDefence"
                         app:layout_constraintHorizontal_bias="0.47"
@@ -287,10 +279,8 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
                         android:gravity="center"
-                        android:hint="0"
                         android:inputType="number"
                         android:maxLength="3"
-                        android:text="@string/zero"
                         app:layout_constraintBottom_toBottomOf="@+id/tvSuperClone"
                         app:layout_constraintStart_toEndOf="@+id/tvSuperClone"
                         app:layout_constraintTop_toTopOf="@+id/tvSuperClone" />
@@ -326,10 +316,8 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginRight="16dp"
                         android:gravity="center"
-                        android:hint="0"
                         android:inputType="number"
                         android:maxLength="3"
-                        android:text="@string/zero"
                         app:layout_constraintBottom_toBottomOf="@+id/tvSuperClone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/tvSuperClone" />
@@ -353,10 +341,8 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
                         android:gravity="center"
-                        android:hint="0"
                         android:inputType="number"
                         android:maxLength="3"
-                        android:text="@string/zero"
                         app:layout_constraintBottom_toBottomOf="@+id/tvMediumClone"
                         app:layout_constraintStart_toEndOf="@+id/tvMediumClone"
                         app:layout_constraintTop_toTopOf="@+id/tvMediumClone" />
@@ -403,11 +389,8 @@
                         android:layout_marginRight="8dp"
                         android:layout_marginStart="52dp"
                         android:gravity="center"
-                        android:hint="0"
                         android:inputType="number"
                         android:maxLength="6"
-                        android:singleLine="false"
-                        android:text="@string/zero"
                         app:layout_constraintBottom_toBottomOf="@+id/tvSatellite"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/tvSatellite"
@@ -467,6 +450,140 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/tvTarget"
                         app:layout_constraintTop_toTopOf="@+id/tvTarget" />
+
+                    <TextView
+                        android:id="@+id/tvEattr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="24dp"
+                        android:text="敌方属性"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTarget" />
+
+                    <TextView
+                        android:id="@+id/tvEfire"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/fire"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvEattr" />
+
+                    <TextView
+                        android:id="@+id/tvEspeed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="@string/speed"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="@+id/tvEfire"
+                        app:layout_constraintStart_toStartOf="@+id/tvEfire"
+                        app:layout_constraintTop_toBottomOf="@+id/tvEfire" />
+
+                    <TextView
+                        android:id="@+id/tvEfireNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginStart="32dp"
+                        android:text="TextView"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvEfire"
+                        app:layout_constraintStart_toEndOf="@+id/tvEfire"
+                        app:layout_constraintTop_toTopOf="@+id/tvEfire"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/tvEdefence"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/defence"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvEfire"
+                        app:layout_constraintEnd_toEndOf="@+id/tvEpower"
+                        app:layout_constraintStart_toStartOf="@+id/tvEpower"
+                        app:layout_constraintTop_toTopOf="@+id/tvEfire" />
+
+                    <TextView
+                        android:id="@+id/tvEdefenceNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvEfire"
+                        app:layout_constraintEnd_toEndOf="@+id/tvEpowerNum"
+                        app:layout_constraintStart_toStartOf="@+id/tvEpowerNum"
+                        app:layout_constraintTop_toTopOf="@+id/tvEfire" />
+
+                    <TextView
+                        android:id="@+id/tvEspeedNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvEspeed"
+                        app:layout_constraintEnd_toEndOf="@+id/tvEfireNum"
+                        app:layout_constraintStart_toStartOf="@+id/tvEfireNum"
+                        app:layout_constraintTop_toTopOf="@+id/tvEspeed" />
+
+                    <TextView
+                        android:id="@+id/tvEluck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/luck"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvEspeed"
+                        app:layout_constraintEnd_toEndOf="@+id/tvEdefence"
+                        app:layout_constraintStart_toStartOf="@+id/tvEdefence"
+                        app:layout_constraintTop_toTopOf="@+id/tvEspeed" />
+
+                    <TextView
+                        android:id="@+id/tvEluckNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvEspeed"
+                        app:layout_constraintEnd_toEndOf="@+id/tvEdefenceNum"
+                        app:layout_constraintStart_toStartOf="@+id/tvEdefenceNum"
+                        app:layout_constraintTop_toTopOf="@+id/tvEspeed" />
+
+                    <TextView
+                        android:id="@+id/tvEpower"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/power"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvEattr"
+                        app:layout_constraintEnd_toStartOf="@+id/tvEpowerNum"
+                        app:layout_constraintHorizontal_bias="0.829"
+                        app:layout_constraintStart_toEndOf="@+id/tvEattr"
+                        app:layout_constraintTop_toTopOf="@+id/tvEattr"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/tvEpowerNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
+                        android:text="TextView"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvEattr"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvEattr"
+                        app:layout_constraintVertical_bias="0.0" />
 
                 </android.support.constraint.ConstraintLayout>
 

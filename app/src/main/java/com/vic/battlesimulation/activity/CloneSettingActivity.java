@@ -78,8 +78,8 @@ public class CloneSettingActivity extends AppCompatActivity {
         etBfsNum.setText(preferences.getString("bfs", ""));
         etKjsbNum.setText(preferences.getString("kjsb", ""));
 
-        etCloneLoss.setText(preferences.getString("loss", "0"));
-        etCloneLevel.setText(preferences.getString("level", "0"));
+        etCloneLoss.setText(preferences.getString("loss", ""));
+        etCloneLevel.setText(preferences.getString("level", ""));
 
         spinnerAngel.setSelection(preferences.getInt("qh_ts",0));
         spinnerInsectQuene.setSelection(preferences.getInt("qh_ch",0));

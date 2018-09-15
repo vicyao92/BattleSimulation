@@ -14,12 +14,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
@@ -75,6 +75,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText etMediumClone;
     @BindView(R.id.btnTarget)
     Button btnTarget;
+    @BindView(R.id.tvEattr)
+    TextView tvEattr;
+    @BindView(R.id.tvEfire)
+    TextView tvEfire;
+    @BindView(R.id.tvEspeed)
+    TextView tvEspeed;
+    @BindView(R.id.tvEfireNum)
+    TextView tvEfireNum;
+    @BindView(R.id.tvEdefence)
+    TextView tvEdefence;
+    @BindView(R.id.tvEdefenceNum)
+    TextView tvEdefenceNum;
+    @BindView(R.id.tvEspeedNum)
+    TextView tvEspeedNum;
+    @BindView(R.id.tvEluck)
+    TextView tvEluck;
+    @BindView(R.id.tvEluckNum)
+    TextView tvEluckNum;
+    @BindView(R.id.tvEpower)
+    TextView tvEpower;
+    @BindView(R.id.tvEpowerNum)
+    TextView tvEpowerNum;
 
     private MyAttribute myAttribute;
     private Enemy enemy;
@@ -105,6 +127,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
     private SharedPreferences autoSave;
     private boolean isReady;
+    private long EPower;
+    private int EFire;
+    private int ELuck;
+    private int EDefence;
+    private int ESpeed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
     }
 
-    @OnClick({R.id.btnSimulation,R.id.btnTarget})
+    @OnClick({R.id.btnSimulation, R.id.btnTarget})
     protected void MyClick(View v) {
         switch (v.getId()) {
             case R.id.btnSimulation:
@@ -201,10 +229,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     default:
                         isReady = notNullJudge();
-                        if (isReady){
+                        if (isReady) {
                             doSimulation();
-                        }else {
-                            Toast.makeText(MainActivity.this,"四维及战力不能为空",
+                        } else {
+                            Toast.makeText(MainActivity.this, "四维及战力不能为空",
                                     Toast.LENGTH_LONG).show();
                         }
                         break;
@@ -239,29 +267,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //根据所选目标,生成敌人属性
         String target = btnTarget.getText().toString().trim();
-        openHelper = new MyDBHelper(this, "simulation", null, 1);
-        database = openHelper.getReadableDatabase();
-        Cursor cursor = database.rawQuery("select * from " + ENEMY_TABLE + " where name = ?", new String[]{target});
-        while (cursor.moveToNext()) {
-            power = cursor.getLong(cursor.getColumnIndex("power"));
-            fire = cursor.getInt(cursor.getColumnIndex("fire"));
-            defence = cursor.getInt(cursor.getColumnIndex("defence"));
-            speed = cursor.getInt(cursor.getColumnIndex("speed"));
-            luck = cursor.getInt(cursor.getColumnIndex("luck"));
+        //queryEnemyAtrr(target);
+        SharedPreferences sp = getSharedPreferences(MyApplication.EXTRA_SETTING, 0);
+        if (sp.getInt("guard", 0) != 0) {
+            EFire -= 1;
+            EDefence -= 1;
+            ESpeed -= 1;
+            ELuck -= 1;
         }
-        cursor.close();
-        database.close();
-        SharedPreferences sp = getSharedPreferences(MyApplication.EXTRA_SETTING,0);
-        if (sp.getInt("guard",0)!=0){
-            fire -=1;
-            defence -= 1;
-            speed -= 1;
-            luck -=1;
+        if (sp.getInt("haty", 0) != 0) {
+            EFire -= 3;
         }
-        if (sp.getInt("haty",0)!=0){
-            fire -= 3;
-        }
-        initialEnemyAttribute(target, power, fire, defence, speed, luck);
+        initialEnemyAttribute(target, EPower, EFire, EDefence, ESpeed, ELuck);
         intent.putExtra("MyAttribute", myAttribute);
         intent.putExtra("EnemyAttr", enemy);
         startActivity(intent);
@@ -332,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             database.endTransaction();
             database.close();
             preferences.edit().putBoolean("First", false).apply();
-        }else {
+        } else {
             loadLastData();
         }
     }
@@ -415,7 +432,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case "克隆体配置":
                 springFloatingActionMenu.hideMenu();
-                Intent clone= new Intent(MainActivity.this, CloneSettingActivity.class);
+                Intent clone = new Intent(MainActivity.this, CloneSettingActivity.class);
                 startActivity(clone);
                 break;
             case "机器人配置":
@@ -533,6 +550,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String tx = options1Items.get(options1).getPickerViewText()
                         + options2Items.get(options1).get(options2);
                 btnTarget.setText(tx);
+                if (!tx.equals("M03待更新")) {
+                    queryEnemyAtrr(tx);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Message message = new Message();
+                            message.what = 1;
+                            handler.sendMessage(message);
+                        }
+                    }).start();
+                }
             }
         })
                 .setTitleText("攻打目标选择")
@@ -607,6 +635,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     database.close();
                     break;
                 }
+                case 1:
+                    theClass.tvEattr.setVisibility(View.VISIBLE);
+                    theClass.tvEpower.setVisibility(View.VISIBLE);
+                    theClass.tvEpowerNum.setText(theClass.EPower+"");
+                    theClass.tvEpowerNum.setVisibility(View.VISIBLE);
+                    theClass.tvEfire.setVisibility(View.VISIBLE);
+                    theClass.tvEfireNum.setVisibility(View.VISIBLE);
+                    theClass.tvEfireNum.setText(theClass.EFire+"");
+                    theClass.tvEdefence.setVisibility(View.VISIBLE);
+                    theClass.tvEdefenceNum.setVisibility(View.VISIBLE);
+                    theClass.tvEdefenceNum.setText(theClass.EDefence+"");
+                    theClass.tvEspeed.setVisibility(View.VISIBLE);
+                    theClass.tvEspeedNum.setVisibility(View.VISIBLE);
+                    theClass.tvEspeedNum.setText(theClass.ESpeed+"");
+                    theClass.tvEluck.setVisibility(View.VISIBLE);
+                    theClass.tvEluckNum.setVisibility(View.VISIBLE);
+                    theClass.tvEluckNum.setText(theClass.ELuck+"");
+                    break;
             }
         }
     }
@@ -615,7 +661,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         autoSave = getSharedPreferences(MyApplication.LAST_SETTING, 0);
         SharedPreferences.Editor editor = autoSave.edit();
-        editor.putInt("faction",faction.getSelectedItemPosition());
+        editor.putInt("faction", faction.getSelectedItemPosition());
         editor.putString("power", etPower.getText().toString());
         editor.putString("fire", etFire.getText().toString());
         editor.putString("defense", etDefence.getText().toString());
@@ -630,30 +676,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * @return
-     * 四维及战力非空判断
+     * @return 四维及战力非空判断
      */
     private boolean notNullJudge() {
         if (etFire.getText().toString().equals("") || etDefence.getText().toString().equals("") ||
                 etSpeed.getText().toString().equals("") || etLuck.getText().toString().equals("") ||
                 etPower.getText().toString().equals("")) {
             return false;
-        }else {
+        } else {
             return true;
         }
     }
 
-    private void loadLastData(){
+    private void loadLastData() {
         autoSave = getSharedPreferences(MyApplication.LAST_SETTING, 0);
-        faction.setSelection(autoSave.getInt("faction",0));
-        etPower.setText(autoSave.getString("power",""));
-        etFire.setText(autoSave.getString("fire",""));
-        etDefence.setText(autoSave.getString("defense",""));
-        etSpeed.setText(autoSave.getString("speed",""));
-        etLuck.setText(autoSave.getString("luck",""));
-        etSatellite.setText(autoSave.getString("satellite",""));
-        etLowClone.setText(autoSave.getString("lowNum",""));
-        etMediumClone.setText(autoSave.getString("mediumNum",""));
-        etSuperClone.setText(autoSave.getString("superNum",""));
+        faction.setSelection(autoSave.getInt("faction", 0));
+        etPower.setText(autoSave.getString("power", ""));
+        etFire.setText(autoSave.getString("fire", ""));
+        etDefence.setText(autoSave.getString("defense", ""));
+        etSpeed.setText(autoSave.getString("speed", ""));
+        etLuck.setText(autoSave.getString("luck", ""));
+        etSatellite.setText(autoSave.getString("satellite", ""));
+        etLowClone.setText(autoSave.getString("lowNum", ""));
+        etMediumClone.setText(autoSave.getString("mediumNum", ""));
+        etSuperClone.setText(autoSave.getString("superNum", ""));
+    }
+
+    private void queryEnemyAtrr(String name) {
+        openHelper = new MyDBHelper(this, "simulation", null, 1);
+        database = openHelper.getReadableDatabase();
+        Cursor cursor = database.rawQuery("select * from " + ENEMY_TABLE + " where name = ?", new String[]{name});
+        while (cursor.moveToNext()) {
+            EPower = cursor.getLong(cursor.getColumnIndex("power"));
+            EFire = cursor.getInt(cursor.getColumnIndex("fire"));
+            EDefence = cursor.getInt(cursor.getColumnIndex("defence"));
+            ESpeed = cursor.getInt(cursor.getColumnIndex("speed"));
+            ELuck = cursor.getInt(cursor.getColumnIndex("luck"));
+        }
+        cursor.close();
+        database.close();
     }
 }
