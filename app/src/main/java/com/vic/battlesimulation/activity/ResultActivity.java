@@ -404,7 +404,7 @@ public class ResultActivity extends AppCompatActivity {
         dragon = qhXkl == 0 ? 0 : 5 * cloneLevel * xklNum + 25 *(qhXkl - 1);
         insect = 0;
         lks = qhLks == 0 ? 0: 6000 * lksNum * cloneLevel + 21000 * (qhLks -1);
-        jfyDamage = qhJfy == 0 ? 0 : 33000 * cloneLevel ;
+        jfyDamage = qhJfy == 0 ? 0 : 22000 * cloneLevel ;
         txzDamage = qhTxz == 0 ? 0 : 39000 * cloneLevel ;
 
         cloneZeng = 1000 * cloneLevel * (yxNum + kjsbNum + tsNuM + bzrNum + hlNum);
@@ -446,28 +446,20 @@ public class ResultActivity extends AppCompatActivity {
         double eBj = enemy.getEnemyAttribute().getBjCoefficient();
         double ePj = enemy.getEnemyAttribute().getPjCoefficient();
         long satellite;
-        long mbZeng;
-        long mbJian;
-        long mbBao;
-        mbBao = myAttribute.getMbBao();
-        mbJian = myAttribute.getMbJian();
-        //cloneBao = myAttribute.getCloneCricDamage();
-        //cloneReduction = myAttribute.getCloneReductionDamage();
-        mbZeng = myAttribute.getMbZeng();
+
         satellite = myAttribute.getSatellite();
-        //cloneZeng = myAttribute.getCloneAdditionDamage();
         temp = myAttribute.getMyAttribute().getLuck() - enemy.getEnemyAttribute().getLuck();
         myBasicDamage = (long) (0.2 * (myAttribute.getMyAttribute().getPower() * 0.75 + 0.25 * mcPower));
         enemyBasicDamage = (long) (0.2 * (enemy.getEnemyAttribute().getPower() * 0.75 + 0.25 * ecPower));
 
-        myDamage = Double.valueOf(myBasicDamage * (myPj + myBj) + mbZeng + satellite + cloneZeng).longValue();
+        myDamage = Double.valueOf(myBasicDamage * (myPj + myBj)  + satellite + cloneZeng).longValue();
         if (temp > 0) {
-            myDamage = myDamage + mbBao + cloneBao;
+            myDamage = myDamage + cloneBao;
         }
         if (round == 1) {
-            enemyDamage = Double.valueOf(enemyBasicDamage * (firstRoundEPj + eBj) - mbJian - satellite - cloneReduction).longValue();
+            enemyDamage = Double.valueOf(enemyBasicDamage * (firstRoundEPj + eBj)- satellite - cloneReduction).longValue();
         } else {
-            enemyDamage = Double.valueOf(enemyBasicDamage * (ePj + eBj) - mbJian - satellite - cloneReduction).longValue();
+            enemyDamage = Double.valueOf(enemyBasicDamage * (ePj + eBj)- satellite - cloneReduction).longValue();
         }
         manageSpecialDamage(round);
         //设置最终伤害
@@ -503,6 +495,9 @@ public class ResultActivity extends AppCompatActivity {
      * @param round 根据回合数增加或者减免特殊伤害
      */
     private void manageSpecialDamage(int round) {
+        if (enemyCurrentPowerPerTurn.get(enemyCurrentPowerPerTurn.size() - 1) < enemyCurrentPowerPerTurn.get(0)/2){
+            myDamage = myDamage + txzDamage ;
+        }
         switch (round) {
             case 1:
                 myDamage = myDamage + mutant;
@@ -524,7 +519,7 @@ public class ResultActivity extends AppCompatActivity {
                         Log.d("AtrrDebug","insect:"+insect);
                         break;
                 }
-                myDamage = myDamage + insect;
+                myDamage = myDamage + insect + jfyDamage;
                 break;
             case 3:
                 myDamage = myDamage + angel;
