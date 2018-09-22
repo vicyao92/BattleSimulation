@@ -156,15 +156,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         options2Items_01.add("神龙");
         ArrayList<String> options2Items_02 = new ArrayList<>();
         options2Items_02.add("元星曼徳斯");
-        options2Items_02.add("浮丘");
-        options2Items_02.add("海尼拉星炽天使");
         options2Items_02.add("元星掠夺第4波");
         options2Items_02.add("元星掠夺第5波");
-        options2Items_02.add("投影5级");
-        options2Items_02.add("徇星金蝰蛇");
         options2Items_02.add("元星霍德尔");
+        options2Items_02.add("海尼拉星炽天使");
+        options2Items_02.add("徇星金蝰蛇");
+        options2Items_02.add("投影5级");
+        options2Items_02.add("浮丘");
         ArrayList<String> options2Items_03 = new ArrayList<>();
-        options2Items_03.add("待更新");
+        options2Items_03.add("母星防守第3波");
+        options2Items_03.add("母星防守第4波");
+        options2Items_03.add("母星防守第5波");
+        options2Items_03.add("母星狂暴AI");
+        options2Items_03.add("BOSS维尔迪蒙");
+        options2Items_03.add("生态星反抗军");
+        options2Items_03.add("异化兽群LV3");
+        options2Items_03.add("舰队LV3");
 
         options2Items.add(options2Items_01);
         options2Items.add(options2Items_02);
@@ -345,6 +352,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     "'M02元星霍德尔',2860625,656,396,524,791)");
             database.execSQL("insert into Enemy(name,power,fire,defence,speed,luck) values(" +
                     "'M01神龙',4830000,885,483,676,732)");
+            database.execSQL("insert into Enemy(name,power,fire,defence,speed,luck) values(" +
+                    "'M03母星防守第3波',2463675,641,583,408,524)");
+            database.execSQL("insert into Enemy(name,power,fire,defence,speed,luck) values(" +
+                    "'M03母星防守第4波',2765675,718,497,663,441)");
+            database.execSQL("insert into Enemy(name,power,fire,defence,speed,luck) values(" +
+                    "'M03母星防守第5波',3085075,775,465,671,569)");
+            database.execSQL("insert into Enemy(name,power,fire,defence,speed,luck) values(" +
+                    "'M03母星狂暴AI',3563650,703,769,606,633)");
+            database.execSQL("insert into Enemy(name,power,fire,defence,speed,luck) values(" +
+                    "'M03BOSS维尔迪蒙',3602225,735,791,535,664)");
+            database.execSQL("insert into Enemy(name,power,fire,defence,speed,luck) values(" +
+                    "'M03生态星反抗军',2280575,684,559,374,437)");
+            database.execSQL("insert into Enemy(name,power,fire,defence,speed,luck) values(" +
+                    "'M03异化兽群LV3',2903850,673,538,670,509)");
+            database.execSQL("insert into Enemy(name,power,fire,defence,speed,luck) values(" +
+                    "'M03舰队LV3',2822450,701,647,592,407)");
             database.setTransactionSuccessful();
             database.endTransaction();
             database.close();
@@ -688,6 +711,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * 自动加载上一次的配置
+     */
     private void loadLastData() {
         autoSave = getSharedPreferences(MyApplication.LAST_SETTING, 0);
         faction.setSelection(autoSave.getInt("faction", 0));
