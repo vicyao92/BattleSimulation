@@ -37,7 +37,12 @@
     <string name="l_yl">翼龙</string>
     <string name="l_cclz">巢虫领主</string>
     <string name="l_kjsb">奎甲士兵</string>
+    <string name="m_fsbn">辐射爆囊</string>
+    <string name="m_hl">火龙</string>
+    <string name="m_le">雷鄂</string>
     <string name="l_bfs">暴风兽</string>
+    <string name="s_jfy">飓风鹰</string>
+    <string name="s_txz">天刑者</string>
     <string name="s_ts">天使</string>
     <string name="s_ch">虫后</string>
     <string name="s_bzr">变种人</string>

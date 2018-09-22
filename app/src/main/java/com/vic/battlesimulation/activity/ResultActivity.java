@@ -51,6 +51,8 @@ public class ResultActivity extends AppCompatActivity {
     private long nano;
     private long mutant;
     private long dragon;
+    private long jfyDamage;
+    private long txzDamage;
     //克隆体增减暴反伤
     private long cloneZeng;
     private long cloneBao;
@@ -369,6 +371,8 @@ public class ResultActivity extends AppCompatActivity {
         int qhNmjb = preferences.getInt("qh_nmjb", 0);
         int qhXkl = preferences.getInt("qh_xkl", 0);
         int qhLks = preferences.getInt("qh_lks", 0);
+        int qhJfy = preferences.getInt("qh_jfy",0);
+        int qhTxz = preferences.getInt("qh_txz",0);
         //超级克隆体数量
         int tsNuM = qhTs==0?0:1;
         int nmjbNum = qhNmjb==0?0:1;
@@ -376,6 +380,8 @@ public class ResultActivity extends AppCompatActivity {
         int bzrNum = qhBzr==0?0:1;
         int xklNum = qhXkl==0?0:1;
         int lksNum = qhLks==0?0:1;
+        int jfyNum = qhJfy==0?0:1;
+        int txzNum = qhTxz==0?0:1;
         //高级克隆体数量
         int qxbytNum = Integer.valueOf(preferences.getString("qxbyt", "0"));
         int yxNum = Integer.valueOf(preferences.getString("yx", "0"));
@@ -383,6 +389,9 @@ public class ResultActivity extends AppCompatActivity {
         int cclzNum = Integer.valueOf(preferences.getString("cclz", "0"));
         int bfsNum = Integer.valueOf(preferences.getString("bfs", "0"));
         int kjsbNum = Integer.valueOf(preferences.getString("kjsb", "0"));
+        int fsbnNum = Integer.valueOf(preferences.getString("fsbn","0"));
+        int hlNum = Integer.valueOf(preferences.getString("hl","0"));
+        int leNum = Integer.valueOf(preferences.getString("le","0"));
 
         angel = qhTs == 0 ? 0 : 24000 * cloneLevel + 30000 * (qhTs -1);
         nano = qhNmjb == 0 ? 0 : 16000 * cloneLevel * nmjbNum + 20000 * (qhNmjb-1);
@@ -395,10 +404,12 @@ public class ResultActivity extends AppCompatActivity {
         dragon = qhXkl == 0 ? 0 : 5 * cloneLevel * xklNum + 25 *(qhXkl - 1);
         insect = 0;
         lks = qhLks == 0 ? 0: 6000 * lksNum * cloneLevel + 21000 * (qhLks -1);
+        jfyDamage = qhJfy == 0 ? 0 : 33000 * cloneLevel ;
+        txzDamage = qhTxz == 0 ? 0 : 39000 * cloneLevel ;
 
-        cloneZeng = 1000 * cloneLevel * (yxNum + kjsbNum + tsNuM + bzrNum);
-        cloneReduction = lks + 1000 * cloneLevel * (qxbytNum + cclzNum + lksNum);
-        cloneBao = 1200 * cloneLevel * ( chNum + xklNum );
+        cloneZeng = 1000 * cloneLevel * (yxNum + kjsbNum + tsNuM + bzrNum + hlNum);
+        cloneReduction = lks + 1000 * cloneLevel * (qxbytNum + cclzNum + lksNum + leNum);
+        cloneBao = 1200 * cloneLevel * ( chNum + xklNum + fsbnNum);
         cloneReflection = 1000 * cloneLevel * (bfsNum + ylNum + nmjbNum);
         if (qhTs == 2){cloneZeng += 1000;}
         if (qhBzr == 2){cloneZeng += 1000;}

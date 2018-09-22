@@ -92,8 +92,6 @@
                         android:id="@+id/tvYx"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
                         android:layout_marginTop="20dp"
                         android:text="@string/l_yx"
                         app:layout_constraintEnd_toEndOf="@+id/tvQxbyt"
@@ -120,8 +118,6 @@
                         android:id="@+id/tvYl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
                         android:layout_marginTop="20dp"
                         android:text="@string/l_yl"
                         app:layout_constraintEnd_toEndOf="@+id/tvQxbyt"
@@ -144,8 +140,6 @@
                         android:id="@+id/tvCclz"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
                         android:layout_marginTop="20dp"
                         android:text="@string/l_cclz"
                         app:layout_constraintEnd_toEndOf="@+id/tvQxbyt"
@@ -168,8 +162,6 @@
                         android:id="@+id/tvBfs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
                         android:layout_marginTop="20dp"
                         android:text="@string/l_bfs"
                         app:layout_constraintEnd_toEndOf="@+id/tvQxbyt"
@@ -197,8 +189,6 @@
                         android:id="@+id/tvKjsb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
                         android:layout_marginTop="20dp"
                         android:text="@string/l_kjsb"
                         app:layout_constraintEnd_toEndOf="@+id/tvQxbyt"
@@ -221,6 +211,78 @@
                         app:layout_constraintEnd_toEndOf="@+id/etBfsNum"
                         app:layout_constraintStart_toStartOf="@+id/etBfsNum"
                         app:layout_constraintTop_toTopOf="@+id/tvKjsb" />
+
+                    <TextView
+                        android:id="@+id/tvFsbn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/m_fsbn"
+                        app:layout_constraintEnd_toEndOf="@+id/tvQxbyt"
+                        app:layout_constraintStart_toStartOf="@+id/tvQxbyt"
+                        app:layout_constraintTop_toBottomOf="@+id/tvKjsb" />
+
+                    <EditText
+                        android:id="@+id/etFsbn"
+                        android:layout_width="@dimen/dp_60"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvFsbn"
+                        app:layout_constraintEnd_toEndOf="@+id/etKjsbNum"
+                        app:layout_constraintStart_toStartOf="@+id/etKjsbNum"
+                        app:layout_constraintTop_toTopOf="@+id/tvFsbn" />
+
+                    <TextView
+                        android:id="@+id/tvHl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/m_hl"
+                        app:layout_constraintEnd_toEndOf="@+id/tvQxbyt"
+                        app:layout_constraintStart_toStartOf="@+id/tvQxbyt"
+                        app:layout_constraintTop_toBottomOf="@+id/tvFsbn" />
+
+                    <EditText
+                        android:id="@+id/etHl"
+                        android:layout_width="@dimen/dp_60"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvHl"
+                        app:layout_constraintEnd_toEndOf="@+id/etFsbn"
+                        app:layout_constraintStart_toStartOf="@+id/etFsbn"
+                        app:layout_constraintTop_toTopOf="@+id/tvHl" />
+
+                    <TextView
+                        android:id="@+id/tvLe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/m_le"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/tvQxbyt"
+                        app:layout_constraintStart_toStartOf="@+id/tvQxbyt"
+                        app:layout_constraintTop_toBottomOf="@+id/tvHl" />
+
+                    <EditText
+                        android:id="@+id/etLe"
+                        android:layout_width="@dimen/dp_60"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvLe"
+                        app:layout_constraintEnd_toEndOf="@+id/etHl"
+                        app:layout_constraintStart_toStartOf="@+id/etHl"
+                        app:layout_constraintTop_toTopOf="@+id/tvLe" />
 
                 </android.support.constraint.ConstraintLayout>
 
